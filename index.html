@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About Me</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --accent: #38bdf8;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .page {
+      max-width: 900px;
+      width: 100%;
+      background: linear-gradient(135deg, #020617, #0b1120);
+      border-radius: 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+    }
+
+    @media (max-width: 768px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .left {
+      padding: 2.5rem 2.5rem 2rem;
+    }
+
+    .right {
+      padding: 2.5rem 2.5rem 2rem;
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 60%);
+      border-left: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .bio {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: #cbd5f5;
+      margin-bottom: 1.8rem;
+    }
+
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pill {
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 0.8rem;
+      color: #d1d5db;
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .pill.highlight {
+      border-color: rgba(56, 189, 248, 0.8);
+      color: var(--accent);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.85);
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      padding: 0.9rem;
+    }
+
+    .card-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .card-value {
+      font-size: 0.95rem;
+      color: #e5e7eb;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.7rem;
+      align-items: flex-start;
+    }
+
+    .timeline-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 2px solid rgba(56, 189, 248, 0.9);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+      margin-top: 0.25rem;
+    }
+
+    .timeline-content-title {
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+
+    .timeline-content-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .timeline-content-body {
+      font-size: 0.85rem;
+      color: #cbd5f5;
+      margin-top: 0.25rem;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .link {
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .link span.icon {
+      font-size: 1rem;
+    }
+
+    .link:hover {
+      background: rgba(15, 23, 42, 1);
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="left">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        <span>About Me</span>
+      </div>
+
+      <h1>Your Name Here</h1>
+      <p class="subtitle">Curious human • Builder • Lifelong learner</p>
+
+      <p class="bio">
+        I’m someone who loves connecting ideas, people, and systems. I’m happiest when I’m learning something new,
+        building something useful, or helping others see a problem from a fresh angle. I care a lot about thoughtful
+        design, clear communication, and work that actually makes life better for real humans.
+      </p>
+
+      <p class="section-title">What I’m into</p>
+      <div class="pill-row">
+        <span class="pill highlight">Designing systems that feel human</span>
+        <span class="pill">Deep work & focus</span>
+        <span class="pill">Writing & storytelling</span>
+        <span class="pill">Data with context</span>
+        <span class="pill">Teaching & mentoring</span>
+        <span class="pill">Slow mornings & good coffee</span>
+      </div>
+
+      <p class="section-title">Quick snapshot</p>
+      <div class="grid">
+        <div class="card">
+          <p class="card-label">Currently</p>
+          <p class="card-value">Building, learning, and refining how I work and live.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Strengths</p>
+          <p class="card-value">Systems thinking, empathy, clear communication, and turning ideas into action.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Values</p>
+          <p class="card-value">Honesty, curiosity, craftsmanship, and showing up consistently.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Fun facts</p>
+          <p class="card-value">I collect questions, not things—and I’ll always say yes to a good conversation.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="right">
+      <p class="section-title">Path so far</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div>
+            <p class="timeline-content-title">Learning the craft</p>
+            <p class="timeline-content-sub">Early years</p>
+            <p class="timeline-content-body">
+              I started by following my curiosity—taking things apart, asking why they worked that way, and trying to
+              put them back together a little better than before.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div>
+            <p class="timeline-content-title">Building in the real world</p>
+            <p class="timeline-content-sub">Recent years</p>
+            <p class="timeline-content-body">
+              I’ve worked across different projects and roles, always gravitating toward the intersection of people,
+              process, and technology—where small changes can have outsized impact.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div>
+            <p class="timeline-content-title">Where I’m headed</p>
+            <p class="timeline-content-sub">Right now</p>
+            <p class="timeline-content-body">
+              I’m focused on doing meaningful work with thoughtful people, staying curious, and designing a life that
+              leaves room for both ambition and rest.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-title">Outside of work</p>
+      <div class="pill-row">
+        <span class="pill">Reading books that stretch my thinking</span>
+        <span class="pill">Exploring new cities and quiet corners</span>
+        <span class="pill">Journaling & reflection</span>
+        <span class="pill">Music as a daily ritual</span>
+      </div>
+
+      <p class="section-title">Find me online</p>
+      <div class="links">
+        <a class="link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="icon">🌐</span>
+          <span>Personal site</span>
+        </a>
+        <a class="link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="icon">💼</span>
+          <span>LinkedIn</span>
+        </a>
+        <a class="link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="icon">✍️</span>
+          <span>Writing</span>
+        </a>
+        <a class="link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="icon">📧</span>
+          <span>Email</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
