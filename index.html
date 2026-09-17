@@ -2,15 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>About Me</title>
+  <title>Kiefer Ryan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Kiefer Ryan — Marketing & Business Analytics student at Xavier University. Consulting, retail analytics, and marketing." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0f172a;
-      --card: #111827;
-      --accent: #38bdf8;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
+      --ink: #14120f;
+      --ink-soft: #23201b;
+      --paper: #f6f2ea;
+      --paper-dim: #ece4d3;
+      --rule: #d9d0bd;
+      --rule-dark: #3a362e;
+      --accent: #d98e04;
+      --accent-2: #8a3324;
+      --muted: #8a8474;
     }
 
     * {
@@ -19,326 +27,870 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1f2937 0, #020617 55%);
-      color: var(--text);
-      min-height: 100vh;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+    ::selection { background: var(--accent); color: var(--ink); }
+
+    .wrap {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 0 1.75rem;
+    }
+
+    .serif { font-family: "Fraunces", Georgia, serif; }
+    .mono { font-family: "IBM Plex Mono", monospace; }
+
+    /* Scroll reveal (progressive enhancement) */
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .js .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- NAV ---------- */
+    nav.top {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(20, 18, 15, 0.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--rule-dark);
+    }
+
+    .nav-inner {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 1rem 1.75rem;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      padding: 2rem;
     }
 
-    .page {
-      max-width: 900px;
-      width: 100%;
-      background: linear-gradient(135deg, #020617, #0b1120);
-      border-radius: 1.5rem;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.9);
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+    .nav-mark {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 600;
+      color: var(--paper);
+      text-decoration: none;
+      font-size: 1.05rem;
     }
 
-    @media (max-width: 768px) {
-      .page {
-        grid-template-columns: 1fr;
-      }
+    .nav-links {
+      display: flex;
+      gap: 1.6rem;
+      list-style: none;
     }
 
-    .left {
-      padding: 2.5rem 2.5rem 2rem;
+    .nav-links a {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      text-decoration: none;
+      color: #b7b2a3;
+      position: relative;
+      padding-bottom: 3px;
     }
 
-    .right {
-      padding: 2.5rem 2.5rem 2rem;
-      background: radial-gradient(circle at top left, #0f172a 0, #020617 60%);
-      border-left: 1px solid rgba(148, 163, 184, 0.25);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.25rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-bottom: 1.2rem;
-    }
-
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
       background: var(--accent);
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
+      transition: width 0.25s ease;
     }
 
-    h1 {
-      font-size: 2.4rem;
-      letter-spacing: 0.03em;
-      margin-bottom: 0.4rem;
+    .nav-links a:hover {
+      color: var(--paper);
     }
 
-    .subtitle {
-      font-size: 1rem;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
-    .bio {
-      font-size: 0.98rem;
-      line-height: 1.7;
-      color: #cbd5f5;
-      margin-bottom: 1.8rem;
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
     }
 
-    .section-title {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--muted);
-      margin-bottom: 0.7rem;
+    /* ---------- HERO ---------- */
+    header.hero {
+      background: var(--ink);
+      color: var(--paper);
+      position: relative;
+      padding: 5.5rem 0 4.5rem;
+      overflow: hidden;
+      border-bottom: 1px solid var(--rule-dark);
     }
 
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
+    .hero-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 700;
+      font-size: 22vw;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(246, 242, 234, 0.06);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.02em;
     }
 
-    .pill {
-      padding: 0.35rem 0.8rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      font-size: 0.8rem;
-      color: #d1d5db;
-      background: rgba(15, 23, 42, 0.7);
+    .hero-inner {
+      position: relative;
+      z-index: 1;
     }
 
-    .pill.highlight {
-      border-color: rgba(56, 189, 248, 0.8);
+    .hero-kicker {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
       color: var(--accent);
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .card {
-      background: rgba(15, 23, 42, 0.85);
-      border-radius: 0.9rem;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      padding: 0.9rem;
-    }
-
-    .card-label {
-      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      margin-bottom: 0.35rem;
-    }
-
-    .card-value {
-      font-size: 0.95rem;
-      color: #e5e7eb;
-    }
-
-    .timeline {
+      letter-spacing: 0.14em;
+      margin-bottom: 1.3rem;
       display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .timeline-item {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 0.7rem;
-      align-items: flex-start;
-    }
-
-    .timeline-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      border: 2px solid rgba(56, 189, 248, 0.9);
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
-      margin-top: 0.25rem;
-    }
-
-    .timeline-content-title {
-      font-size: 0.9rem;
-      color: #e5e7eb;
-    }
-
-    .timeline-content-sub {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    .timeline-content-body {
-      font-size: 0.85rem;
-      color: #cbd5f5;
-      margin-top: 0.25rem;
-    }
-
-    .links {
-      display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       gap: 0.6rem;
     }
 
-    .link {
-      font-size: 0.85rem;
+    .hero-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(217, 142, 4, 0.2);
+    }
+
+    h1.hero-name {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.02;
+      max-width: 14ch;
+      margin-bottom: 1.6rem;
+    }
+
+    h1.hero-name em {
+      font-style: italic;
+      font-weight: 400;
       color: var(--accent);
-      text-decoration: none;
+    }
+
+    .hero-sub {
+      font-size: 1.2rem;
+      color: #cfc9ba;
+      max-width: 52ch;
+      margin-bottom: 2.2rem;
+    }
+
+    .hero-sub strong {
+      color: var(--paper);
+      font-weight: 600;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      padding: 0.4rem 0.75rem;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      background: rgba(15, 23, 42, 0.9);
+      gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.85rem;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
     }
 
-    .link span.icon {
+    .btn-solid {
+      background: var(--accent);
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .btn-solid:hover {
+      transform: translateY(-2px);
+      background: #f0a827;
+    }
+
+    .btn-line {
+      border: 1px solid var(--rule-dark);
+      color: var(--paper);
+    }
+
+    .btn-line:hover {
+      border-color: var(--paper);
+      transform: translateY(-2px);
+    }
+
+    /* ---------- MARQUEE ---------- */
+    .marquee {
+      background: var(--accent);
+      color: var(--ink);
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--rule-dark);
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      width: max-content;
+      animation: scroll-left 26s linear infinite;
+      padding: 0.75rem 0;
+    }
+
+    .marquee:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    .marquee-item {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0 1.5rem;
+      border-right: 1px solid rgba(20, 18, 15, 0.25);
+    }
+
+    @keyframes scroll-left {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ---------- STATS ---------- */
+    .stats {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .stat-num {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(2rem, 4vw, 2.7rem);
+      font-weight: 600;
+      color: var(--accent-2);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 18ch;
+    }
+
+    @media (max-width: 700px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 2.5rem;
+      }
+    }
+
+    /* ---------- ABOUT ---------- */
+    .about {
+      padding: 4.5rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 700px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .about-copy p {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    .about-copy p + p {
+      margin-top: 1.1rem;
+    }
+
+    .about-copy strong {
+      color: var(--accent-2);
+      font-weight: 600;
+    }
+
+    .focus-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    .focus-item {
+      padding-left: 1.4rem;
+      border-left: 2px solid var(--rule);
+      transition: border-color 0.2s ease;
+    }
+
+    .focus-item:hover {
+      border-color: var(--accent);
+    }
+
+    .focus-num {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+    }
+
+    .focus-title {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin: 0.2rem 0 0.3rem;
+    }
+
+    .focus-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* ---------- SECTION HEAD ---------- */
+    .section {
+      padding: 4.5rem 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-num {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+
+    .section-head h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.9rem;
+      font-weight: 500;
+    }
+
+    /* ---------- TIMELINE ---------- */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 0.4rem;
+      bottom: 0.4rem;
+      width: 1px;
+      background: var(--rule);
+    }
+
+    .t-entry {
+      position: relative;
+      padding-bottom: 2.6rem;
+    }
+
+    .t-entry:last-child {
+      padding-bottom: 0;
+    }
+
+    .t-entry::before {
+      content: "";
+      position: absolute;
+      left: -2rem;
+      top: 0.35rem;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 2px solid var(--accent-2);
+    }
+
+    .t-entry.current::before {
+      background: var(--accent-2);
+    }
+
+    .t-date {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.76rem;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.3rem;
+    }
+
+    .t-role {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 0.1rem;
+    }
+
+    .t-org {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .t-entry ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      max-width: 62ch;
+    }
+
+    .t-entry li {
+      font-size: 0.95rem;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+
+    .t-entry li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.65em;
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+    }
+
+    /* ---------- DARK BAND (education / involvement) ---------- */
+    .band-dark {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .band-dark .section-head h2 {
+      color: var(--paper);
+    }
+
+    .two-up {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    @media (max-width: 700px) {
+      .two-up { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .block-title {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    .school {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+    }
+
+    .school-loc {
+      font-size: 0.85rem;
+      color: #a39d8c;
+      margin-bottom: 0.6rem;
+    }
+
+    .degree {
+      font-size: 0.98rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .degree-date {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 0.9rem;
+    }
+
+    .coursework {
+      font-size: 0.9rem;
+      color: #b7b2a3;
+    }
+
+    .involve-item {
+      margin-bottom: 1.2rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--rule-dark);
+    }
+
+    .involve-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .involve-org {
       font-size: 1rem;
+      font-weight: 600;
     }
 
-    .link:hover {
-      background: rgba(15, 23, 42, 1);
-      box-shadow: 0 0 18px rgba(56, 189, 248, 0.4);
+    .involve-role {
+      font-size: 0.86rem;
+      color: #b7b2a3;
+    }
+
+    .involve-date {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+    }
+
+    /* Skills as bracket tags */
+    .skills-row {
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--rule-dark);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem 1.4rem;
+    }
+
+    .tag {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.92rem;
+      color: var(--paper);
+      transition: color 0.15s ease;
+    }
+
+    .tag::before { content: "["; color: var(--accent); }
+    .tag::after { content: "]"; color: var(--accent); }
+
+    .tag:hover {
+      color: var(--accent);
+    }
+
+    /* ---------- FOOTER / CTA ---------- */
+    footer {
+      background: var(--paper);
+      padding: 5rem 0 3rem;
+      text-align: center;
+    }
+
+    .cta-line {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 500;
+      margin-bottom: 1.8rem;
+    }
+
+    .cta-line em {
+      font-style: italic;
+      color: var(--accent-2);
+    }
+
+    footer .btn-row {
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .btn-solid.dark {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn-solid.dark:hover {
+      background: var(--ink-soft);
+    }
+
+    .btn-line.dark {
+      border-color: var(--rule);
+      color: var(--ink);
+    }
+
+    .btn-line.dark:hover {
+      border-color: var(--ink);
+    }
+
+    .foot-note {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.76rem;
+      color: var(--muted);
     }
   </style>
 </head>
 <body>
-  <main class="page">
-    <section class="left">
-      <div class="badge">
-        <span class="badge-dot"></span>
-        <span>About Me</span>
-      </div>
+  <nav class="top">
+    <div class="nav-inner">
+      <a class="nav-mark" href="#top">Kiefer Ryan</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#involvement">Involvement</a></li>
+      </ul>
+    </div>
+  </nav>
 
-      <h1>Your Name Here</h1>
-      <p class="subtitle">Curious human • Builder • Lifelong learner</p>
-
-      <p class="bio">
-        I’m someone who loves connecting ideas, people, and systems. I’m happiest when I’m learning something new,
-        building something useful, or helping others see a problem from a fresh angle. I care a lot about thoughtful
-        design, clear communication, and work that actually makes life better for real humans. I am also currently in class, remote. Also at Cappy's with donovan
+  <header class="hero" id="top">
+    <span class="hero-watermark">INSIGHTS</span>
+    <div class="wrap hero-inner">
+      <p class="hero-kicker">Open to internships &amp; co-ops · 2027</p>
+      <h1 class="hero-name">Turning data into <em>decisions</em>.</h1>
+      <p class="hero-sub">
+        I'm <strong>Kiefer Ryan</strong>, a Marketing &amp; Business Analytics student at Xavier University
+        who's spent the last few years in consulting, retail category analysis, and hands-on marketing —
+        finding the story inside the numbers.
       </p>
+      <div class="btn-row">
+        <a class="btn btn-solid" href="#experience">See the work →</a>
+        <a class="btn btn-line" href="mailto:ryank29@xavier.edu">Say hello</a>
+      </div>
+    </div>
+  </header>
 
-      <p class="section-title">What I’m into</p>
-      <div class="pill-row">
-        <span class="pill highlight">Designing systems that feel human</span>
-        <span class="pill">Deep work & focus</span>
-        <span class="pill">Writing & storytelling</span>
-        <span class="pill">Data with context</span>
-        <span class="pill">Teaching & mentoring</span>
-        <span class="pill">Slow mornings & good coffee</span>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span class="marquee-item">Category Analysis</span>
+      <span class="marquee-item">Consumer Insights</span>
+      <span class="marquee-item">CRM &amp; Recruiting</span>
+      <span class="marquee-item">Social Strategy</span>
+      <span class="marquee-item">Retail Analytics</span>
+      <span class="marquee-item">Brand Building</span>
+      <span class="marquee-item">Category Analysis</span>
+      <span class="marquee-item">Consumer Insights</span>
+      <span class="marquee-item">CRM &amp; Recruiting</span>
+      <span class="marquee-item">Social Strategy</span>
+      <span class="marquee-item">Retail Analytics</span>
+      <span class="marquee-item">Brand Building</span>
+    </div>
+  </div>
+
+  <section class="stats reveal">
+    <div class="wrap stats-grid">
+      <div>
+        <p class="stat-num">3,500+</p>
+        <p class="stat-label">Monthly newsletter subscribers reached</p>
+      </div>
+      <div>
+        <p class="stat-num">300%</p>
+        <p class="stat-label">Growth in social impressions driven</p>
+      </div>
+      <div>
+        <p class="stat-num">50+</p>
+        <p class="stat-label">Candidates supported through hiring pipelines</p>
+      </div>
+      <div>
+        <p class="stat-num">2027</p>
+        <p class="stat-label">Expected graduation, Xavier University</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+      <div class="about-copy reveal">
+        <p>
+          I like the moment a spreadsheet turns into a decision. Whether that's spotting which
+          <strong>SKUs</strong> deserve shelf space at Kroger, growing a newsletter to
+          <strong>3,500+ subscribers</strong>, or matching candidates to the right role, I'm usually the
+          one asking "what does the data actually say" before anyone commits to a strategy.
+        </p>
+        <p>
+          Outside of client work, I'm active in Xavier's <strong>American Marketing Association</strong>
+          chapter and <strong>Delta Sigma Pi</strong>, and I've spent years in fast-paced service roles that
+          taught me how to move quickly without losing accuracy — a habit that carries over into every
+          report I build.
+        </p>
+      </div>
+      <div class="focus-list reveal">
+        <div class="focus-item">
+          <p class="focus-num">Consulting</p>
+          <p class="focus-title">Category &amp; Consumer Analysis</p>
+          <p class="focus-desc">Reading Numerator, Circana, and Mintel data to find where demand and competitive positioning actually are.</p>
+        </div>
+        <div class="focus-item">
+          <p class="focus-num">Marketing</p>
+          <p class="focus-title">Content &amp; Campaign Strategy</p>
+          <p class="focus-desc">Publishing newsletters and social campaigns that grow reach without losing message discipline.</p>
+        </div>
+        <div class="focus-item">
+          <p class="focus-num">Operations</p>
+          <p class="focus-title">People &amp; Process</p>
+          <p class="focus-desc">Running CRM-driven recruiting pipelines and high-volume service operations where accuracy under pressure matters.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="experience">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num mono">01</span>
+        <h2>Experience</h2>
       </div>
 
-      <p class="section-title">Quick snapshot</p>
-      <div class="grid">
-        <div class="card">
-          <p class="card-label">Currently</p>
-          <p class="card-value">Building, learning, and refining how I work and live.</p>
-        </div>
-        <div class="card">
-          <p class="card-label">Strengths</p>
-          <p class="card-value">Systems thinking, empathy, clear communication, and turning ideas into action.</p>
-        </div>
-        <div class="card">
-          <p class="card-label">Values</p>
-          <p class="card-value">Honesty, curiosity, craftsmanship, and showing up consistently.</p>
-        </div>
-        <div class="card">
-          <p class="card-label">Fun facts</p>
-          <p class="card-value">I collect questions, not things—and I’ll always say yes to a good conversation.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="right">
-      <p class="section-title">Path so far</p>
       <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div>
-            <p class="timeline-content-title">Learning the craft</p>
-            <p class="timeline-content-sub">Early years</p>
-            <p class="timeline-content-body">
-              I started by following my curiosity—taking things apart, asking why they worked that way, and trying to
-              put them back together a little better than before.
-            </p>
-          </div>
+        <div class="t-entry current reveal">
+          <p class="t-date">January 2025 — Present</p>
+          <p class="t-role">Intern Associate</p>
+          <p class="t-org">Lead Advisor Consulting · Boston, MA</p>
+          <ul>
+            <li>Supported the recruiting branch with outreach, interviews, and follow-up for 50+ potential employees</li>
+            <li>Produce and publish a specialized wealth management monthly newsletter to over 3,500 monthly subscribers</li>
+            <li>Utilize a CRM platform to match potential employees with clients' needs for distinct positions, sourcing candidates through LinkedIn and personal connections</li>
+          </ul>
         </div>
 
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div>
-            <p class="timeline-content-title">Building in the real world</p>
-            <p class="timeline-content-sub">Recent years</p>
-            <p class="timeline-content-body">
-              I’ve worked across different projects and roles, always gravitating toward the intersection of people,
-              process, and technology—where small changes can have outsized impact.
-            </p>
-          </div>
+        <div class="t-entry reveal">
+          <p class="t-date">Spring 2025</p>
+          <p class="t-role">Category Analyst Consultant</p>
+          <p class="t-org">Kroger · Cincinnati, OH</p>
+          <ul>
+            <li>Identified SKUs with higher demand across America utilizing Numerator, Circana, and Mintel reports</li>
+            <li>Conducted category analysis to build customer-centric insights and recommend strategies for driving sales and competitive positioning</li>
+            <li>Collaborated with a student group to craft a presentation for CPG leaders and the Kroger air care team</li>
+          </ul>
         </div>
 
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div>
-            <p class="timeline-content-title">Where I’m headed</p>
-            <p class="timeline-content-sub">Right now</p>
-            <p class="timeline-content-body">
-              I’m focused on doing meaningful work with thoughtful people, staying curious, and designing a life that
-              leaves room for both ambition and rest.
-            </p>
+        <div class="t-entry reveal">
+          <p class="t-date">November 2022 — May 2023</p>
+          <p class="t-role">Marketing Intern</p>
+          <p class="t-org">Falmouth Chamber of Commerce · Falmouth, MA</p>
+          <ul>
+            <li>Piloted social media programs, growing impressions by over 300% and following by 60%</li>
+            <li>Ensured local businesses and town members stayed up to date on local events</li>
+            <li>Achieved a goal of raising impressions by 15% month over month</li>
+          </ul>
+        </div>
+
+        <div class="t-entry current reveal">
+          <p class="t-date">May 2021 — Present</p>
+          <p class="t-role">Team Member</p>
+          <p class="t-org">Papa Gino's &amp; D'Angelo's · Falmouth, MA</p>
+          <ul>
+            <li>Grill cook, pizza maker, POS operation, cash handling, and delivery driver</li>
+            <li>Top sales performer at the highest-volume location (weekly and daily); 5th highest sales generator company-wide during a record-setting week</li>
+            <li>Managed catering orders end-to-end — order taking, prep, and ensuring customer satisfaction</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-dark" id="education">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num mono">02</span>
+        <h2>Education &amp; Involvement</h2>
+      </div>
+
+      <div class="two-up reveal">
+        <div>
+          <p class="block-title">Education</p>
+          <p class="school">Xavier University</p>
+          <p class="school-loc">Cincinnati, OH</p>
+          <p class="degree">B.S., Marketing &amp; Business Analytics</p>
+          <p class="degree-date">Expected May 2027</p>
+          <p class="coursework">Relevant coursework: Brand Building, Category Management, Principles of Marketing, Consumer Behavior</p>
+        </div>
+
+        <div id="involvement">
+          <p class="block-title">Involvement</p>
+          <div class="involve-item">
+            <p class="involve-org">Delta Sigma Pi Professional Fraternity</p>
+            <p class="involve-role">Standards Committee &amp; Professional Committee</p>
+            <p class="involve-date">2024 — Present</p>
+          </div>
+          <div class="involve-item">
+            <p class="involve-org">American Marketing Association</p>
+            <p class="involve-role">Director of Event Coordination · Member, National &amp; Xavier Chapter</p>
+            <p class="involve-date">2023 — Present</p>
           </div>
         </div>
       </div>
 
-      <p class="section-title">Outside of work</p>
-      <div class="pill-row">
-        <span class="pill">Reading books that stretch my thinking</span>
-        <span class="pill">Exploring new cities and quiet corners</span>
-        <span class="pill">Journaling & reflection</span>
-        <span class="pill">Music as a daily ritual</span>
+      <div class="skills-row reveal">
+        <p class="block-title">Skills &amp; Tools</p>
+        <div class="tag-row">
+          <span class="tag">Adobe</span>
+          <span class="tag">Canva</span>
+          <span class="tag">G-Suite</span>
+          <span class="tag">Microsoft 365</span>
+          <span class="tag">Meta Business Suite</span>
+          <span class="tag">Mailchimp</span>
+          <span class="tag">Numerator</span>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <p class="section-title">Find me online</p>
-      <div class="links">
-        <a class="link" href="#" target="_blank" rel="noopener noreferrer">
-          <span class="icon">🌐</span>
-          <span>Personal site</span>
-        </a>
-        <a class="link" href="#" target="_blank" rel="noopener noreferrer">
-          <span class="icon">💼</span>
-          <span>LinkedIn</span>
-        </a>
-        <a class="link" href="#" target="_blank" rel="noopener noreferrer">
-          <span class="icon">✍️</span>
-          <span>Writing</span>
-        </a>
-        <a class="link" href="#" target="_blank" rel="noopener noreferrer">
-          <span class="icon">📧</span>
-          <span>Email</span>
-        </a>
+  <footer>
+    <div class="wrap">
+      <p class="cta-line">Let's build something <em>worth measuring</em>.</p>
+      <div class="btn-row">
+        <a class="btn btn-solid dark" href="mailto:ryank29@xavier.edu">ryank29@xavier.edu</a>
+        <a class="btn btn-line dark" href="https://www.linkedin.com/in/kieferr" target="_blank" rel="noopener noreferrer">LinkedIn →</a>
       </div>
-    </section>
-  </main>
+      <p class="foot-note">Kiefer Ryan · Cincinnati, OH</p>
+    </div>
+  </footer>
+
+  <script>
+    document.documentElement.classList.add('js');
+    var els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      els.forEach(function (el) { io.observe(el); });
+    } else {
+      els.forEach(function (el) { el.classList.add('visible'); });
+    }
+  </script>
 </body>
 </html>
-
