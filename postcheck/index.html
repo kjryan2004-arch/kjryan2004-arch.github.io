@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PostCheck</title>
+<style>
+/* Direction: a trusted household-brand blue (the brief: Dawn's confidence) applied to the world PostCheck
+   lives in: paper flyers on a campus board, and the EngageXU fields they become.
+   Signature: the "flyer in, post out" ledger, where each scrap of flyer sits beside the field it filled.
+   Blue carries the page, yellow only marks actions and the inspection seal, coral appears only inside flyers.
+   Surfaces are flat; the form is the one raised card. Fonts ship from ./fonts. One committed light look. */
+@font-face { font-family: "Nunito"; src: url("fonts/nunito.woff2") format("woff2"); font-weight: 200 1000; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/nunito-sans.woff2") format("woff2"); font-weight: 200 1000; font-display: swap; }
+:root {
+  --blue: #1658D6;        /* dominant: hero, pledge band, links */
+  --blue-deep: #0E3F9E;   /* pressed states, footer */
+  --paper: #FFFFFF;       /* ground */
+  --board: #EEF4FD;       /* quiet second ground */
+  --ink: #0F2547;         /* text */
+  --muted: #45577A;       /* secondary text, 7:1 on white */
+  --rule: #CFDDF2;
+  --sun: #FFC93C;         /* action + seal only */
+  --sun-edge: #E9AE12;
+  --sun-ink: #2A1F00;
+  --coral: #FF6B57;       /* the student's flyer, never the UI */
+  --plum: #34164A;
+  --amber: #8F4A06;
+  --amber-bg: #FFF1DE;
+  --display: "Nunito", "Arial Rounded MT Bold", "Segoe UI", sans-serif;
+  --body: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 18px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+a { color: var(--blue); }
+:focus-visible { outline: 3px solid var(--sun-edge); outline-offset: 3px; border-radius: 6px; }
+p { margin: 0; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; }
+h1 { font-weight: 900; font-size: clamp(54px, 8.4vw, 112px); line-height: .94; letter-spacing: -0.025em; }
+h2 { font-weight: 900; font-size: clamp(34px, 4.4vw, 56px); line-height: 1.04; letter-spacing: -0.015em; }
+h3 { font-weight: 800; font-size: 22px; line-height: 1.25; }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
+.narrow { max-width: 860px; }
+@media (max-width: 720px) { .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); } }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; height: 58px; padding: 0 32px; border-radius: 999px; border: 0; font: 900 18px/1 var(--display); text-decoration: none; cursor: pointer; transition: transform .15s ease-out, box-shadow .15s ease-out, background .15s ease-out; }
+.btn.sun { background: var(--sun); color: var(--sun-ink); box-shadow: 0 5px 0 var(--sun-edge); }
+.btn.sun:hover { transform: translateY(-1px); box-shadow: 0 6px 0 var(--sun-edge); }
+.btn.sun:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--sun-edge); }
+.textlink { font: 800 18px/1.2 var(--display); color: inherit; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+.textlink:hover { text-decoration-color: var(--sun); }
+
+/* header */
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-bottom: 1px solid var(--rule); }
+.top .wrap { display: flex; align-items: center; gap: 32px; height: 72px; }
+.lockup { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font: 900 24px/1 var(--display); letter-spacing: -0.01em; }
+.badge { width: 34px; height: 34px; border-radius: 8px; background: var(--blue); display: grid; place-items: center; flex: none; }
+.badge svg { width: 72%; height: 72%; }
+.top nav { display: flex; gap: 28px; margin-left: auto; }
+.top nav a { color: var(--ink); text-decoration: none; font: 800 16px/1 var(--display); padding-block: 8px; border-bottom: 2px solid transparent; }
+.top nav a:hover { border-bottom-color: var(--blue); }
+.top .btn { height: 44px; padding: 0 22px; font-size: 16px; box-shadow: 0 4px 0 var(--sun-edge); }
+@media (max-width: 820px) { .top nav { display: none; } .top .btn { margin-left: auto; } }
+
+/* hero: the product doing the job */
+.hero { background: var(--blue); color: #fff; position: relative; overflow: hidden; padding-block: 80px 140px; }
+.hero .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; position: relative; z-index: 1; }
+.hero-copy { display: grid; gap: 30px; min-width: 0; }
+.hero .lede { font-size: 22px; line-height: 1.5; color: #E4EDFF; max-width: 30em; }
+.cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; }
+.hero .textlink { color: #fff; }
+.wave { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 90px; display: block; }
+@media (max-width: 940px) { .hero { padding-block: 56px 110px; } .hero .wrap { grid-template-columns: 1fr; gap: 64px; } }
+
+.stage { position: relative; min-height: 640px; min-width: 0; }
+.pinned { position: absolute; left: 0; top: 70px; width: 250px; aspect-ratio: 460 / 600; transform: rotate(-7deg); background: var(--coral); border-radius: 6px; padding: 22px 20px; color: #fff; box-shadow: 0 22px 40px -18px rgba(5, 20, 60, .55); overflow: hidden; }
+.pinned::before { content: ""; position: absolute; width: 150px; height: 150px; border-radius: 50%; background: var(--sun); right: -50px; top: -60px; }
+.pinned .pin { position: absolute; left: 50%; top: 10px; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: #E23B2E; box-shadow: inset -3px -3px 0 rgba(0, 0, 0, .18), 0 3px 4px rgba(0, 0, 0, .3); z-index: 2; }
+.pinned small { position: relative; display: block; font: 800 12px/1 var(--display); color: var(--plum); margin-top: 14px; }
+.pinned b { position: relative; display: block; font: 900 38px/0.98 var(--display); margin-top: 10px; }
+.pinned b span { color: var(--plum); }
+.pinned i { position: relative; display: inline-block; margin-top: 16px; background: var(--sun); color: var(--plum); font: 800 12px/1 var(--display); font-style: normal; padding: 6px 10px; border-radius: 12px; }
+.pinned p { position: relative; margin-top: 18px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, .45); font: 800 13px/1.5 var(--display); }
+.pinned p span { color: var(--plum); }
+.phone { position: absolute; right: 0; top: 0; width: 320px; aspect-ratio: 320 / 650; background: #0D1B33; border-radius: 46px; padding: 10px; box-shadow: 0 40px 70px -28px rgba(3, 15, 50, .75); }
+@media (max-width: 1100px) { .pinned { width: 210px; } }
+@media (max-width: 940px) { .stage { min-height: 0; display: grid; justify-items: end; padding-left: 0; } .phone { position: relative; width: min(320px, 78%); } .pinned { width: min(210px, 46%); top: 40px; } }
+.screen { height: 100%; border-radius: 37px; background: #fff; color: #15171C; overflow: hidden; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; font: 400 13px/1.35 var(--body); }
+.screen .status { font-weight: 700; font-size: 12px; padding-left: 10px; }
+.screen .apphead { display: flex; align-items: center; gap: 8px; font: 900 17px/1 var(--display); }
+.screen .apphead .badge { width: 26px; height: 26px; border-radius: 6px; }
+.fields { display: grid; }
+.field { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 3px 10px; padding: 10px 0; border-bottom: 1px solid #E3E8F0; }
+.field:last-child { border-bottom: 0; }
+.field .lab { font-size: 11px; color: #56607A; font-weight: 600; display: flex; gap: 6px; align-items: baseline; }
+.field .src { font-size: 10px; color: var(--blue); font-weight: 700; }
+.field .src.asked { color: var(--amber); }
+.field .val { font: 900 15px/1.2 var(--display); grid-column: 1; font-variant-numeric: tabular-nums; }
+.field .tick { grid-column: 2; grid-row: 1 / span 2; width: 26px; height: 26px; border-radius: 50%; background: #E3EEFF; display: grid; place-items: center; }
+.tick svg { width: 18px; height: 18px; }
+.tick path { stroke-dasharray: 24; stroke-dashoffset: 0; }
+.screen .postbtn { margin-top: auto; height: 44px; border-radius: 999px; background: var(--blue); color: #fff; display: grid; place-items: center; font: 900 14px/1 var(--display); }
+@media (prefers-reduced-motion: no-preference) {
+  .tick path { animation: draw .4s cubic-bezier(.25, .8, .25, 1) both; }
+  .field:nth-child(1) .tick path { animation-delay: .7s; }
+  .field:nth-child(2) .tick path { animation-delay: 1s; }
+  .field:nth-child(3) .tick path { animation-delay: 1.3s; }
+  .field:nth-child(4) .tick path { animation-delay: 1.6s; }
+  .field:nth-child(5) .tick path { animation-delay: 1.9s; }
+  @keyframes draw { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+}
+.seal { position: absolute; width: 132px; height: 132px; left: 150px; bottom: 30px; transform: rotate(-10deg); z-index: 2; }
+.seal svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 10px 14px rgba(3, 15, 50, .35)); }
+.seal text { font: 900 10.6px var(--display); letter-spacing: .14em; fill: var(--sun-ink); }
+@media (max-width: 940px) { .seal { left: 4%; bottom: -10px; width: 112px; height: 112px; } }
+
+/* ledger: flyer in, post out */
+.ledger-sec { padding-block: 72px 112px; }
+.ledger-head { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: end; margin-bottom: 48px; }
+.ledger-head p { color: var(--muted); font-size: 19px; }
+@media (max-width: 860px) { .ledger-head { grid-template-columns: 1fr; gap: 16px; } }
+.ledger { display: grid; border-top: 3px solid var(--ink); }
+.ledger .colhead { display: grid; grid-template-columns: 1fr 64px 1.15fr; padding-block: 14px; font: 800 15px/1 var(--display); color: var(--muted); border-bottom: 1px solid var(--rule); }
+.ledger .colhead span:last-child { grid-column: 3; }
+.row { display: grid; grid-template-columns: 1fr 64px 1.15fr; align-items: center; padding-block: 22px; border-bottom: 1px solid var(--rule); }
+.scrap { justify-self: start; background: var(--coral); color: #fff; font: 900 22px/1.15 var(--display); padding: 10px 16px; border-radius: 3px; transform: rotate(-1.2deg); box-shadow: 0 6px 12px -8px rgba(80, 20, 10, .5); max-width: 100%; }
+.row:nth-child(odd) .scrap { transform: rotate(1deg); }
+.scrap.sunny { background: var(--sun); color: var(--plum); }
+.scrap.missing { background: transparent; color: var(--amber); border: 2px dashed #E3A65A; box-shadow: none; font-size: 18px; }
+.scrap.saved { background: var(--board); color: var(--muted); box-shadow: none; font-size: 18px; }
+.join { height: 2px; background: repeating-linear-gradient(90deg, var(--blue) 0 6px, transparent 6px 11px); position: relative; margin-inline: 6px; }
+.join::after { content: ""; position: absolute; right: -4px; top: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--blue); }
+.post { display: grid; grid-template-columns: 1fr auto; gap: 2px 16px; align-items: center; min-width: 0; }
+.post .lab { font: 800 14px/1.2 var(--display); color: var(--muted); }
+.post .val { font: 900 24px/1.2 var(--display); grid-column: 1; font-variant-numeric: tabular-nums; }
+.post .how { grid-column: 1; font-size: 15px; color: var(--blue); font-weight: 600; }
+.post .how.asked { color: var(--amber); }
+.post .ok { grid-column: 2; grid-row: 1 / span 3; width: 40px; height: 40px; border-radius: 50%; background: var(--blue); color: #fff; display: grid; place-items: center; }
+.post .ok svg { width: 24px; height: 24px; }
+.ledger-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; padding-top: 28px; }
+.ledger-foot p { color: var(--muted); max-width: 36em; }
+@media (max-width: 760px) {
+  .ledger .colhead { display: none; }
+  .row { grid-template-columns: 1fr; gap: 14px; }
+  .join { width: 2px; height: 22px; margin: 0 0 0 18px; background: repeating-linear-gradient(180deg, var(--blue) 0 5px, transparent 5px 9px); }
+  .join::after { right: -4px; top: auto; bottom: -6px; }
+}
+
+/* why */
+.why { background: var(--board); padding-block: 104px; }
+.why blockquote { margin: 0; font: 800 clamp(25px, 3vw, 36px)/1.32 var(--display); letter-spacing: -0.01em; text-wrap: pretty; }
+.why blockquote::before { content: "\201C"; color: var(--blue); }
+.why blockquote::after { content: "\201D"; color: var(--blue); }
+.why cite { display: block; margin-top: 22px; font-style: normal; color: var(--muted); }
+.figures { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 72px; border-top: 1px solid var(--rule); }
+.figures div { padding: 24px 24px 0 0; display: grid; gap: 6px; align-content: start; }
+.figures div + div { padding-left: 24px; border-left: 1px solid var(--rule); }
+.figures strong { font: 900 clamp(36px, 3.6vw, 44px)/1 var(--display); white-space: nowrap; color: var(--blue); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.figures span { color: var(--muted); font-size: 16px; }
+.figures sup a { text-decoration: none; font-size: 12px; }
+@media (max-width: 760px) { .why { padding-block: 72px; } .figures { grid-template-columns: 1fr; } .figures div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); } .figures div { padding-bottom: 20px; } }
+
+/* promise */
+.pledge { background: var(--blue); color: #fff; padding-block: 104px; }
+.pledge .wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: 64px; }
+.pledge h2 { color: #fff; }
+.pledge .intro { display: grid; gap: 20px; align-content: start; }
+.pledge .intro p { color: #DCE7FF; font-size: 19px; }
+.vows { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 40px 48px; }
+.vows li { display: grid; gap: 8px; align-content: start; padding-top: 18px; border-top: 2px solid rgba(255, 255, 255, .35); }
+.vows strong { font: 900 22px/1.25 var(--display); }
+.vows span { color: #DCE7FF; font-size: 17px; }
+@media (max-width: 900px) { .pledge { padding-block: 72px; } .pledge .wrap { grid-template-columns: 1fr; gap: 40px; } }
+@media (max-width: 560px) { .vows { grid-template-columns: 1fr; gap: 28px; } }
+
+.wont { padding-block: 96px 0; }
+.wont .wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: 64px; }
+.wont ul { margin: 0; padding: 0; list-style: none; display: grid; }
+.wont li { padding-block: 16px; border-bottom: 1px solid var(--rule); color: var(--muted); }
+.wont li:first-child { border-top: 1px solid var(--rule); }
+.wont li b { color: var(--ink); font: 900 19px/1.3 var(--display); margin-right: 6px; }
+@media (max-width: 900px) { .wont { padding-block: 72px 0; } .wont .wrap { grid-template-columns: 1fr; gap: 28px; } }
+
+/* faq */
+.faq { padding-block: 104px; }
+.faq .wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: 64px; }
+.faq details { border-bottom: 1px solid var(--rule); }
+.faq details:first-of-type { border-top: 1px solid var(--rule); }
+.faq summary { list-style: none; cursor: pointer; padding-block: 22px; display: flex; justify-content: space-between; align-items: center; gap: 20px; font: 900 21px/1.3 var(--display); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ""; flex: none; width: 14px; height: 14px; border-right: 3px solid var(--blue); border-bottom: 3px solid var(--blue); transform: rotate(45deg) translate(-3px, -3px); transition: transform .25s ease-out; }
+.faq details[open] summary::after { transform: rotate(-135deg) translate(-3px, -3px); }
+.faq summary:hover { color: var(--blue); }
+.faq details p { color: var(--muted); padding-bottom: 24px; max-width: 36em; }
+@media (max-width: 900px) { .faq { padding-block: 72px; } .faq .wrap { grid-template-columns: 1fr; gap: 28px; } }
+
+/* pilot */
+.pilot { background: var(--board); padding-block: 104px; }
+.pilot .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: center; }
+.pilot .copy { display: grid; gap: 20px; }
+.pilot .copy p { font-size: 19px; color: var(--muted); max-width: 26em; }
+.formcard { background: #fff; border-radius: 24px; padding: 36px; box-shadow: 0 30px 60px -32px rgba(14, 63, 158, .45); min-width: 0; }
+form.signup { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.signup label { display: grid; gap: 6px; font: 800 15px/1.2 var(--display); min-width: 0; }
+.signup .full { grid-column: 1 / -1; }
+.signup input, .signup select { height: 52px; border-radius: 12px; border: 2px solid var(--rule); padding: 0 14px; width: 100%; font: 400 17px var(--body); background: #fff; color: var(--ink); transition: border-color .15s ease-out; }
+.signup input:hover, .signup select:hover { border-color: #A9C2EA; }
+.signup input:focus, .signup select:focus { outline: none; border-color: var(--blue); }
+.signup button { grid-column: 1 / -1; margin-top: 6px; }
+#f-error { color: #B42318; font-size: 15px; }
+.thanks { display: grid; gap: 10px; padding-block: 20px; }
+.thanks h3 { font-size: 30px; }
+.thanks p { color: var(--muted); }
+@media (max-width: 900px) { .pilot { padding-block: 72px; } .pilot .wrap { grid-template-columns: 1fr; gap: 36px; } .formcard { padding: 24px 18px; } }
+@media (max-width: 480px) { form.signup { grid-template-columns: 1fr; } }
+
+footer { background: var(--blue-deep); color: #D6E2FA; padding-block: 48px; }
+footer .wrap { display: grid; gap: 22px; }
+footer .row1 { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 32px; }
+footer .lockup { color: #fff; }
+footer .lockup .badge { background: #fff; }
+footer .tag { font: 900 22px/1.2 var(--display); color: #fff; }
+footer small { font-size: 14px; line-height: 1.6; }
+footer a { color: #fff; }
+footer ol { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 2px; }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="chk" viewBox="0 0 24 24"><path d="M5.5 12.5l4 4 9-9" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="lockup" href="#top" aria-label="PostCheck home">
+      <span class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12.5l4 4 9-9" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      PostCheck
+    </a>
+    <nav aria-label="Sections">
+      <a href="#how">How it reads a flyer</a>
+      <a href="#promise">Our promise</a>
+      <a href="#questions">Questions</a>
+    </nav>
+    <a class="btn sun" href="#pilot">Join the pilot</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1>Right the first time.</h1>
+        <p class="lede">For student officers who post to EngageXU. PostCheck turns your event flyer into a finished post, asks about anything the flyer leaves out, and waits for your OK before anything goes up.</p>
+        <div class="cta-row">
+          <a class="btn sun" href="#pilot">Join the pilot</a>
+          <a class="textlink" href="#how">See it read a flyer</a>
+        </div>
+      </div>
+
+      <div class="stage" aria-label="A flyer pinned beside a phone running PostCheck, with every field checked">
+        <div class="pinned" aria-hidden="true">
+          <span class="pin"></span>
+          <small>Speaker series</small>
+          <b>Guest Speaker <span>Night</span></b>
+          <i>Free pizza</i>
+          <p>Thursday, Feb 4 · 7 PM<br><span>Room 204</span></p>
+        </div>
+        <div class="phone">
+          <div class="screen">
+            <div class="status">9:41</div>
+            <div class="apphead"><span class="badge"><svg viewBox="0 0 24 24"><path d="M5.5 12.5l4 4 9-9" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Review</div>
+            <div class="fields">
+              <div class="field"><div class="lab">Title <span class="src">from flyer</span></div><div class="val">Guest Speaker Night</div><span class="tick"><svg viewBox="0 0 24 24"><path d="M5.5 12.5l4 4 9-9" fill="none" stroke="#1658D6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              <div class="field"><div class="lab">Date <span class="src">from flyer</span></div><div class="val">Thu, Feb 4</div><span class="tick"><svg viewBox="0 0 24 24"><path d="M5.5 12.5l4 4 9-9" fill="none" stroke="#1658D6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              <div class="field"><div class="lab">Time <span class="src asked">you answered</span></div><div class="val">7:00–8:30 PM</div><span class="tick"><svg viewBox="0 0 24 24"><path d="M5.5 12.5l4 4 9-9" fill="none" stroke="#1658D6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              <div class="field"><div class="lab">Location <span class="src">from flyer</span></div><div class="val">Room 204</div><span class="tick"><svg viewBox="0 0 24 24"><path d="M5.5 12.5l4 4 9-9" fill="none" stroke="#1658D6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+              <div class="field"><div class="lab">Tags <span class="src">suggested</span></div><div class="val">Speaker, Free food</div><span class="tick"><svg viewBox="0 0 24 24"><path d="M5.5 12.5l4 4 9-9" fill="none" stroke="#1658D6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            </div>
+            <div class="postbtn">Post to EngageXU</div>
+          </div>
+        </div>
+        <div class="seal" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <defs><path id="ring" d="M70,70 m-50,0 a50,50 0 1,1 100,0 a50,50 0 1,1 -100,0"/></defs>
+            <circle cx="70" cy="70" r="68" fill="#FFC93C"/>
+            <circle cx="70" cy="70" r="60" fill="none" stroke="#2A1F00" stroke-width="1.5" stroke-dasharray="3 4"/>
+            <text><textPath href="#ring">CHECKED TWICE · POSTED ONCE ·</textPath></text>
+            <path d="M52 71l12 12 25-26" fill="none" stroke="#2A1F00" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,52 C260,96 520,6 780,30 C1040,54 1240,96 1440,40 L1440,90 L0,90 Z" fill="#FFFFFF"/>
+    </svg>
+  </section>
+
+  <section class="ledger-sec" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="ledger-head">
+        <h2 id="how-h">Every detail, matched to your flyer.</h2>
+        <p>Take a photo of the flyer, upload an image or PDF, or type a few lines. Here is what PostCheck does with Guest Speaker Night.</p>
+      </div>
+      <div class="ledger" role="table" aria-label="Flyer details and the EngageXU fields they fill">
+        <div class="colhead" role="row"><span role="columnheader">On the flyer</span><span role="columnheader">In your EngageXU post</span></div>
+        <div class="row" role="row">
+          <span class="scrap" role="cell">Guest Speaker Night</span><span class="join" aria-hidden="true"></span>
+          <div class="post" role="cell"><span class="lab">Title</span><span class="val">Guest Speaker Night</span><span class="how">Copied from the flyer</span><span class="ok"><svg><use href="#chk"/></svg></span></div>
+        </div>
+        <div class="row" role="row">
+          <span class="scrap" role="cell">Thursday, Feb 4 · 7 PM</span><span class="join" aria-hidden="true"></span>
+          <div class="post" role="cell"><span class="lab">Date and start time</span><span class="val">Thu, Feb 4 · 7:00 PM</span><span class="how">Read from the flyer, written the EngageXU way</span><span class="ok"><svg><use href="#chk"/></svg></span></div>
+        </div>
+        <div class="row" role="row">
+          <span class="scrap missing" role="cell">No end time on the flyer</span><span class="join" aria-hidden="true"></span>
+          <div class="post" role="cell"><span class="lab">End time</span><span class="val">8:30 PM</span><span class="how asked">It asked you, “When does it end?”</span><span class="ok"><svg><use href="#chk"/></svg></span></div>
+        </div>
+        <div class="row" role="row">
+          <span class="scrap" role="cell">Room 204</span><span class="join" aria-hidden="true"></span>
+          <div class="post" role="cell"><span class="lab">Location</span><span class="val">Room 204</span><span class="how">Matched to EngageXU’s list of campus rooms</span><span class="ok"><svg><use href="#chk"/></svg></span></div>
+        </div>
+        <div class="row" role="row">
+          <span class="scrap sunny" role="cell">Free pizza</span><span class="join" aria-hidden="true"></span>
+          <div class="post" role="cell"><span class="lab">Tags</span><span class="val">Speaker, Free food</span><span class="how">Suggested from EngageXU’s tag list</span><span class="ok"><svg><use href="#chk"/></svg></span></div>
+        </div>
+        <div class="row" role="row">
+          <span class="scrap saved" role="cell">Saved once, used every time</span><span class="join" aria-hidden="true"></span>
+          <div class="post" role="cell"><span class="lab">Organization and advisor</span><span class="val">Speakers Club</span><span class="how">From your organization’s details</span><span class="ok"><svg><use href="#chk"/></svg></span></div>
+        </div>
+      </div>
+      <div class="ledger-foot">
+        <p>You check each line against the flyer, fix anything that’s off, then post. Campus staff review it in EngageXU as usual.</p>
+        <a class="btn sun" href="#pilot">Join the pilot</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="why" aria-label="Why PostCheck exists">
+    <div class="wrap narrow">
+      <blockquote>Posting our events to EngageXU is such a mindless task. You sit there with the flyer, read it, and type every detail in by hand. There are a lot of places where something gets missed. Then it gets sent back, or people show up at the wrong time.</blockquote>
+      <cite>A student officer, on posting events by hand</cite>
+      <div class="figures">
+        <div><strong>150+</strong><span>student organizations at Xavier<sup><a href="#src1">1</a></sup></span></div>
+        <div><strong>2 weeks</strong><span>ahead is when every event must be submitted<sup><a href="#src2">2</a></sup></span></div>
+        <div><strong>10–15 min</strong><span>to type one event in by hand, by our own estimate</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pledge" id="promise" aria-labelledby="promise-h">
+    <div class="wrap">
+      <div class="intro">
+        <h2 id="promise-h">Our promise.</h2>
+        <p>Your event, your details, your name on it. PostCheck keeps them straight and leaves the decisions to you.</p>
+      </div>
+      <ul class="vows">
+        <li><strong>It asks before it assumes.</strong><span>Anything the flyer doesn’t say is asked about or clearly marked, never invented.</span></li>
+        <li><strong>It shows its work.</strong><span>Every field says where it came from: your flyer, your answer, or your saved details.</span></li>
+        <li><strong>It waits for your OK.</strong><span>The post button stays off until every flagged detail has been checked.</span></li>
+        <li><strong>It leaves approval to campus.</strong><span>Staff review every event in EngageXU, just as they do today.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wont" aria-labelledby="wont-h">
+    <div class="wrap">
+      <h2 id="wont-h">What it won’t do.</h2>
+      <ul>
+        <li><b>Approve events.</b>That stays with campus staff.</li>
+        <li><b>Read Canva links.</b>Export your design as an image or PDF first.</li>
+        <li><b>Design your flyer.</b>Bring the one you already made.</li>
+        <li><b>Book rooms or track RSVPs.</b>It handles the post, and only the post.</li>
+        <li><b>Post anywhere else.</b>No Instagram, no group chats.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="faq" id="questions" aria-labelledby="faq-h">
+    <div class="wrap">
+      <h2 id="faq-h">Questions.</h2>
+      <div>
+        <details open>
+          <summary>Do my events still need campus approval?</summary>
+          <p>Yes. PostCheck submits your event to EngageXU, and campus staff review it the same way they always have. It also keeps a copy so you can start from it next time.</p>
+        </details>
+        <details>
+          <summary>What can I start from?</summary>
+          <p>A photo or screenshot of your flyer, an image or PDF, a few typed lines (day, time, place, food, who’s speaking), or an event you’ve posted before.</p>
+        </details>
+        <details>
+          <summary>What if the flyer is missing something?</summary>
+          <p>PostCheck asks you one short question at a time, such as “When does it end?” If you don’t know yet, skip it. The field stays marked until you fill it in.</p>
+        </details>
+        <details>
+          <summary>Is PostCheck part of Xavier or EngageXU?</summary>
+          <p>No. PostCheck is an independent student project. It is not affiliated with Xavier University or CampusGroups.</p>
+        </details>
+        <details>
+          <summary>Who can join the pilot?</summary>
+          <p>Student officers who post their organization’s events to EngageXU: presidents, events chairs, marketing chairs and anyone else who does the posting.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="pilot" id="pilot" aria-labelledby="pilot-h">
+    <div class="wrap">
+      <div class="copy">
+        <h2 id="pilot-h">Try it on your next event.</h2>
+        <p>Tell us who you are and when your next event is. We’ll reach out before then so you can post it with PostCheck.</p>
+        <p>We use your details only to set up the pilot, and we don’t share them.</p>
+      </div>
+      <div class="formcard">
+        <form class="signup" id="signup" novalidate>
+          <label for="f-name">Name<input id="f-name" name="name" autocomplete="name" required></label>
+          <label for="f-org">Organization<input id="f-org" name="org" required></label>
+          <label for="f-role">Your role
+            <select id="f-role" name="role" required>
+              <option value="">Choose one</option>
+              <option>President</option>
+              <option>Vice president</option>
+              <option>Events or programming chair</option>
+              <option>Marketing or PR chair</option>
+              <option>Secretary or treasurer</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label for="f-date">Date of your next event<input id="f-date" name="date" type="date" required></label>
+          <label class="full" for="f-email">Email<input id="f-email" name="email" type="email" autocomplete="email" required></label>
+          <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <button class="btn sun" type="submit">Join the pilot</button>
+          <p id="f-error" class="full" role="alert" hidden></p>
+        </form>
+        <div class="thanks" id="thanks" hidden>
+          <h3>Thank you.</h3>
+          <p id="thanks-msg"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="row1">
+      <a class="lockup" href="#top">
+        <span class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12.5l4 4 9-9" fill="none" stroke="#1658D6" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        PostCheck
+      </a>
+      <span class="tag">Right the first time.</span>
+    </div>
+    <small>Not affiliated with Xavier University or CampusGroups. PostCheck is a student project.</small>
+    <ol>
+      <li id="src1"><small>Xavier University, <a href="https://www.xavier.edu/clubs/" target="_blank" rel="noopener">Clubs and Student Organizations</a>.</small></li>
+      <li id="src2"><small>Xavier University Office of Student Involvement, <a href="https://www.xavier.edu/student-involvement/documents-2021/student-organization-leader-manual-rev-fall-2025.pdf" target="_blank" rel="noopener">Student Organization Leader Manual</a> (rev. fall 2025), p. 8.</small></li>
+    </ol>
+  </div>
+</footer>
+
+<script>
+  // Paste the web app URL from pilot-signup.gs here. Left empty, sign-ups aren't sent anywhere.
+  const SIGNUP_URL = '';
+  const form = document.getElementById('signup');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const err = document.getElementById('f-error');
+    const missing = [...form.elements].filter(el => el.required && !el.value.trim());
+    const email = form.elements.email;
+    if (missing.length) {
+      err.textContent = 'Please fill in every field so we can reach you before your event.';
+      err.hidden = false; missing[0].focus(); return;
+    }
+    if (!email.checkValidity()) {
+      err.textContent = 'That email address looks incomplete. Check it and try again.';
+      err.hidden = false; email.focus(); return;
+    }
+    const name = form.elements.name.value.trim().split(' ')[0];
+    const d = new Date(form.elements.date.value + 'T12:00');
+    const when = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    let msg = `${name}, we have your event on ${when}. This preview page doesn’t send sign-ups anywhere yet, so nothing was saved.`;
+    if (SIGNUP_URL) {
+      const button = form.querySelector('button[type="submit"]');
+      button.disabled = true;
+      try {
+        // no-cors: Apps Script can't send CORS headers, so the reply can't be read.
+        // A network failure still throws, which is the case worth catching.
+        await fetch(SIGNUP_URL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(new FormData(form)) });
+        msg = `${name}, you’re on the list. We’ll email you before your event on ${when}.`;
+      } catch {
+        button.disabled = false;
+        err.textContent = 'That didn’t go through. Check your connection and try again.';
+        err.hidden = false; return;
+      }
+    }
+    err.hidden = true;
+    document.getElementById('thanks-msg').textContent = msg;
+    form.hidden = true;
+    document.getElementById('thanks').hidden = false;
+  });
+</script>
