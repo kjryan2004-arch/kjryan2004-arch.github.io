@@ -79,7 +79,7 @@ Interactive checks above run at desktop width. Separately re-launch Edge at
 (`Page.captureScreenshot` over the same CDP connection) — read the resulting
 PNG back to actually look at it. Don't skip this for anything that touches
 layout; this site has real CSS (`.work-feature`, `.about-photos`,
-`.stats-layout`) that reflows completely at phone width via `@media`
+`.hero-grid`) that reflows completely at phone width via `@media`
 breakpoints, and that reflow has broken silently before.
 
 ## Cleanup

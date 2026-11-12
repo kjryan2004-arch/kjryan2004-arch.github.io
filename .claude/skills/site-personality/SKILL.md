@@ -60,9 +60,13 @@ borderline, not reasons to reject every idea that has *any* cost on one of them.
 
 - **Generic AI-template slop.** This is the exact thing the site was redesigned away from once
   already — gradient hero blobs, glowing pill badges, cookie-cutter SaaS card-with-shadow
-  layouts. New elements should extend the site's existing visual language (Fraunces serif +
-  Inter body + IBM Plex Mono labels, the ink/paper/rust-accent palette, the editorial/timeline
-  layout — see `index.html`), not introduce a different aesthetic on top of it.
+  layouts. New elements should extend the site's existing visual language (one family,
+  Archivo, used across its width axis; forest-green ink on grey-green paper; shelf-tag yellow
+  reserved for real results and active states; the timeline layout; see the direction comment
+  at the top of the `<style>` block in `index.html`), not introduce a different aesthetic on
+  top of it. Also avoid the "tasteful AI" defaults the site was moved off of in November 2026:
+  cream + terracotta, a serif with one italic accent word, all-caps mono labels, decorative
+  01/02/03 numbers, and arrows glued onto links.
 - **Gimmick for gimmick's sake.** If a feature doesn't have a clear answer to "why would this
   make someone want to stay," it's filler, not fun. Confetti, spinning logos, and "look, it's
   interactive!" widgets with no point fail this test even if they're technically impressive.

@@ -4,63 +4,80 @@
   <meta charset="UTF-8" />
   <title>Kiefer Ryan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Kiefer Ryan — Marketing & Business Analytics student at Xavier University. Consulting, retail analytics, and marketing." />
+  <meta name="description" content="Kiefer Ryan, Marketing & Business Analytics student at Xavier University. Category management, retail analytics, and CPG brand work." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet" />
   <style>
+    /* Direction: the grocery aisle, where category work ends up.
+       Ink is the forest green the site already used. Paper is a cool grey-green, not parchment.
+       Yellow is the shelf tag and is reserved for real numbers and the active filter.
+       One family, Archivo, used across its width axis: expanded for the name, condensed bold
+       for figures (the way a price tag sets them), normal width for reading.
+       Signature: every hard result is a shelf tag. Do not add new colors or faces; extend these. */
     :root {
       --ink: #20342f;
-      --ink-soft: #2b423b;
-      --paper: #fbf7ee;
-      --paper-dim: #f1e8d6;
-      --rule: #e2d8c1;
-      --rule-dark: #44574f;
-      --accent: #e59a3c;
-      --accent-2: #d1653f;
-      --muted: #877f6c;
+      --ink-2: #2f4a42;
+      --paper: #f2f4ee;
+      --paper-2: #e6eae1;
+      --rule: #cdd3c6;
+      --rule-on-ink: #46594f;
+      --muted: #55615a;          /* 5.6:1 on --paper */
+      --muted-on-ink: #b9c3bc;   /* 7:1 on --ink */
+      --tag: #f6d13a;            /* shelf-tag yellow: results and active state only */
+      --tag-edge: #d9b21c;
+      --font: "Archivo", "Arial Narrow", Arial, sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--paper);
       color: var(--ink);
-      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      font-family: var(--font);
       font-size: 17px;
       line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
     a { color: inherit; }
-    ::selection { background: var(--accent); color: var(--ink); }
+    ::selection { background: var(--tag); color: var(--ink); }
+
+    :focus-visible {
+      outline: 2px solid var(--tag-edge);
+      outline-offset: 3px;
+    }
 
     .wrap {
-      max-width: 940px;
+      max-width: 980px;
       margin: 0 auto;
       padding: 0 1.75rem;
     }
 
-    .serif { font-family: "Fraunces", Georgia, serif; }
-    .mono { font-family: "IBM Plex Mono", monospace; }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 1rem; }
+    }
 
-    /* Scroll reveal (progressive enhancement) */
+    /* Figures are set condensed and heavy, like a price on a shelf tag */
+    .fig {
+      font-stretch: 72%;
+      font-weight: 800;
+      font-variant-numeric: lining-nums tabular-nums;
+      letter-spacing: -0.01em;
+    }
+
+    /* Scroll reveal: Selected Work cards only */
     .js .reveal {
       opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(14px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
     .js .reveal.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
 
     /* ---------- NAV ---------- */
@@ -68,138 +85,91 @@
       position: sticky;
       top: 0;
       z-index: 30;
-      background: rgba(32, 52, 47, 0.92);
-      backdrop-filter: blur(6px);
-      border-bottom: 1px solid var(--rule-dark);
+      background: var(--ink);
+      border-bottom: 1px solid var(--rule-on-ink);
     }
 
     .nav-inner {
-      max-width: 940px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: 1rem 1.75rem;
+      padding: 0.9rem 1.75rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
     }
 
     .nav-mark {
-      font-family: "Fraunces", Georgia, serif;
-      font-weight: 600;
+      font-stretch: 115%;
+      font-weight: 700;
       color: var(--paper);
       text-decoration: none;
       font-size: 1.05rem;
+      white-space: nowrap;
     }
 
     .nav-links {
       display: flex;
-      gap: 1.6rem;
+      gap: 1.5rem;
       list-style: none;
     }
 
     .nav-links a {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.78rem;
+      font-size: 0.92rem;
+      font-weight: 500;
       text-decoration: none;
-      color: #b7b2a3;
-      position: relative;
-      padding-bottom: 3px;
-    }
-
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 0;
-      height: 1px;
-      background: var(--accent);
-      transition: width 0.25s ease;
+      color: var(--muted-on-ink);
+      padding: 0.25rem 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s ease, border-color 0.15s ease;
     }
 
     .nav-links a:hover {
       color: var(--paper);
+      border-bottom-color: var(--tag);
     }
 
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
+    @media (max-width: 560px) {
+      .nav-inner { padding: 0.8rem 1rem; }
+      .nav-mark { display: none; }
+      .nav-links { width: 100%; justify-content: space-between; gap: 0.5rem; }
+      .nav-links a { font-size: 0.88rem; }
     }
 
     /* ---------- HERO ---------- */
     header.hero {
       background: var(--ink);
       color: var(--paper);
-      position: relative;
-      padding: 5.5rem 0 4.5rem;
-      overflow: hidden;
-      border-bottom: 1px solid var(--rule-dark);
+      padding: 4.5rem 0 4rem;
     }
 
-    .hero-watermark {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: "Fraunces", Georgia, serif;
-      font-weight: 700;
-      font-size: 22vw;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(246, 242, 234, 0.06);
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-      letter-spacing: -0.02em;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 3rem;
+      align-items: end;
     }
 
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-kicker {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.82rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      margin-bottom: 1.3rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .hero-kicker::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(229, 154, 60, 0.25);
+    .hero-status {
+      font-size: 0.95rem;
+      color: var(--muted-on-ink);
+      margin-bottom: 1rem;
     }
 
     h1.hero-name {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(2.8rem, 8vw, 5rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.02;
-      max-width: 14ch;
+      font-stretch: 125%;
+      font-weight: 800;
+      font-size: clamp(2.9rem, 8.5vw, 5.6rem);
+      letter-spacing: -0.035em;
+      line-height: 0.92;
       margin-bottom: 1.6rem;
-    }
-
-    h1.hero-name em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--accent);
     }
 
     .hero-sub {
       font-size: 1.2rem;
-      color: #cfc9ba;
-      max-width: 52ch;
+      line-height: 1.55;
+      color: var(--muted-on-ink);
+      max-width: 50ch;
       margin-bottom: 2.2rem;
     }
 
@@ -211,97 +181,116 @@
     .btn-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.8rem;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.85rem 1.5rem;
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.85rem;
+      padding: 0.8rem 1.35rem;
+      font: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
       text-decoration: none;
-      border-radius: 2px;
-      transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+      border-radius: 3px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     }
 
     .btn-solid {
-      background: var(--accent);
+      background: var(--tag);
       color: var(--ink);
-      font-weight: 500;
+      border-color: var(--tag);
     }
 
-    .btn-solid:hover {
-      transform: translateY(-2px);
-      background: #f2ac57;
-    }
+    .btn-solid:hover { background: #ffe066; }
+    .btn-solid:active { background: var(--tag-edge); }
 
     .btn-line {
-      border: 1px solid var(--rule-dark);
+      border-color: var(--rule-on-ink);
       color: var(--paper);
     }
 
-    .btn-line:hover {
-      border-color: var(--paper);
-      transform: translateY(-2px);
-    }
+    .btn-line:hover { border-color: var(--paper); }
 
-    /* ---------- MARQUEE ---------- */
-    .marquee {
-      background: var(--accent);
+    /* ---------- SHELF TAG (the signature) ---------- */
+    .shelf-tag {
+      background: var(--tag);
       color: var(--ink);
-      overflow: hidden;
-      white-space: nowrap;
-      border-bottom: 1px solid var(--rule-dark);
+      border-radius: 3px;
+      padding: 1.1rem 1.25rem 1rem;
+      box-shadow: 0 3px 0 var(--tag-edge);
+      max-width: 340px;
+      justify-self: end;
     }
 
-    .marquee-track {
-      display: inline-flex;
-      width: max-content;
-      animation: scroll-left 26s linear infinite;
-      padding: 0.75rem 0;
+    .shelf-tag-what {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.3;
     }
 
-    .marquee:hover .marquee-track {
-      animation-play-state: paused;
+    .shelf-tag-price {
+      font-size: clamp(4rem, 9vw, 5.6rem);
+      line-height: 0.95;
+      margin: 0.35rem 0 0.6rem;
     }
 
-    .marquee-item {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.85rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0 1.5rem;
-      border-right: 1px solid rgba(32, 52, 47, 0.25);
+    .shelf-tag-price sup {
+      font-size: 0.42em;
+      vertical-align: 0.95em;
+      margin-left: 0.04em;
     }
 
-    @keyframes scroll-left {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+    .shelf-tag-unit {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      border-top: 1px dashed rgba(32, 52, 47, 0.45);
+      padding-top: 0.55rem;
+      font-size: 0.82rem;
+    }
+
+    .shelf-tag-unit .fig { font-size: 1.05rem; }
+
+    .shelf-tag-link {
+      margin-top: 0.8rem;
+      background: none;
+      border: none;
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .shelf-tag-link:hover { text-decoration-thickness: 2px; }
+
+    @media (max-width: 760px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .shelf-tag { justify-self: start; }
     }
 
     /* ---------- PROOF STRIP ---------- */
     .proof-strip {
-      background: var(--paper-dim);
       border-bottom: 1px solid var(--rule);
-      padding: 1.6rem 0;
+      padding: 1.4rem 0;
     }
 
     .proof-inner {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.2rem;
       flex-wrap: wrap;
     }
 
     .proof-label {
-      font-size: 0.72rem;
+      font-size: 0.92rem;
       color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      white-space: nowrap;
     }
 
     .proof-logos {
@@ -310,392 +299,82 @@
       flex-wrap: wrap;
     }
 
-    /* ---------- STATS ---------- */
-    .stats {
-      padding: 4.5rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .stats-layout {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .stat-hero {
-      border-right: 1px solid var(--rule);
-      padding-right: 3rem;
-    }
-
-    .stat-hero-num {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(3.5rem, 8vw, 5.5rem);
-      font-weight: 600;
-      color: var(--accent-2);
-      line-height: 0.95;
-      margin-bottom: 0.9rem;
-    }
-
-    .stat-hero-label {
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-      max-width: 32ch;
-      line-height: 1.5;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.8rem;
-    }
-
-    .stat-num {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(1.6rem, 3vw, 2rem);
-      font-weight: 600;
-      color: var(--accent-2);
-      line-height: 1;
-      margin-bottom: 0.35rem;
-    }
-
-    .stat-label {
-      font-size: 0.85rem;
-      color: var(--muted);
-      max-width: 30ch;
-    }
-
-    @media (max-width: 800px) {
-      .stats-layout {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-      }
-      .stat-hero {
-        border-right: none;
-        padding-right: 0;
-        border-bottom: 1px solid var(--rule);
-        padding-bottom: 2rem;
-      }
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    /* ---------- STATEMENT ---------- */
-    .statement {
-      padding: 4.5rem 0;
-      border-bottom: 1px solid var(--rule);
-      background: var(--paper-dim);
-    }
-
-    .statement-inner {
-      display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .statement-media {
+    .logo-chip {
+      height: 28px;
+      max-width: 110px;
+      object-fit: contain;
+      background: #fff;
       border: 1px solid var(--rule);
-      overflow: hidden;
+      border-radius: 2px;
+      padding: 0.3rem 0.55rem;
     }
 
-    .statement-media img {
-      width: 100%;
-      aspect-ratio: 4 / 5;
-      object-fit: cover;
-      display: block;
+    .logo-chip.on-dark {
+      background: var(--ink);
+      border-color: var(--rule-on-ink);
     }
 
-    .statement-kicker {
-      font-size: 0.8rem;
-      color: var(--accent-2);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.9rem;
-    }
-
-    .statement-text {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(1.3rem, 2.6vw, 1.85rem);
-      font-weight: 400;
-      line-height: 1.5;
-      color: var(--ink);
-      max-width: 44ch;
-    }
-
-    .statement-text strong {
-      color: var(--accent-2);
-      font-weight: 600;
-    }
-
-    @media (max-width: 700px) {
-      .statement-inner {
-        grid-template-columns: 1fr;
-      }
-      .statement-media img {
-        aspect-ratio: 16 / 10;
-      }
-    }
-
-    /* ---------- ABOUT ---------- */
-    .about {
-      padding: 4.5rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 0.85fr 1.15fr;
-      gap: 3.5rem;
-      align-items: start;
-      margin-bottom: 3.5rem;
-    }
-
-    @media (max-width: 700px) {
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    }
-
-    .about-photos {
-      position: relative;
-      padding: 1rem 1.5rem 2.5rem 0;
-    }
-
-    .about-photo {
-      display: block;
-      width: 82%;
-      border: 6px solid var(--paper);
-      box-shadow: 0 6px 18px rgba(32, 52, 47, 0.15);
-      object-fit: cover;
-    }
-
-    .about-photo-1 {
-      aspect-ratio: 3 / 4;
-      transform: rotate(-3deg);
-      position: relative;
-      z-index: 1;
-    }
-
-    .about-photo-2 {
-      aspect-ratio: 4 / 3;
-      width: 70%;
-      transform: rotate(4deg);
-      margin: -3.5rem 0 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    @media (max-width: 700px) {
-      .about-photos {
-        padding: 0.5rem 0 2rem;
-        display: flex;
-        gap: 1rem;
-      }
-      .about-photo-1, .about-photo-2 {
-        width: 48%;
-        margin: 0;
-      }
-      .about-photo-1 { transform: rotate(-2deg); }
-      .about-photo-2 { transform: rotate(2deg); }
-    }
-
-    .about-copy p {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 1.25rem;
-      font-weight: 400;
-      line-height: 1.55;
-      color: var(--ink);
-    }
-
-    .about-copy p + p {
-      margin-top: 1.1rem;
-    }
-
-    .about-copy strong {
-      color: var(--accent-2);
-      font-weight: 600;
-    }
-
-    .focus-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid var(--rule);
-    }
-
-    @media (max-width: 700px) {
-      .focus-list { grid-template-columns: 1fr; gap: 1.6rem; }
-    }
-
-    .focus-item {
-      padding-left: 1.4rem;
-      border-left: 2px solid var(--rule);
-      transition: border-color 0.2s ease;
-    }
-
-    .focus-item:hover {
-      border-color: var(--accent);
-    }
-
-    .focus-num {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-    }
-
-    .focus-title {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 1.05rem;
-      font-weight: 500;
-      margin: 0.2rem 0 0.3rem;
-    }
-
-    .focus-desc {
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-
-    /* ---------- SECTION HEAD ---------- */
+    /* ---------- SECTIONS ---------- */
     .section {
       padding: 4.5rem 0;
     }
 
     .section-head {
-      display: flex;
-      align-items: baseline;
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .section-num {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.85rem;
-      color: var(--accent);
+      margin-bottom: 2.2rem;
     }
 
     .section-head h2 {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 1.9rem;
-      font-weight: 500;
+      font-stretch: 112%;
+      font-weight: 700;
+      font-size: clamp(1.9rem, 4vw, 2.5rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
     }
 
-    /* ---------- TIMELINE ---------- */
-    .timeline {
-      position: relative;
-      padding-left: 2rem;
-    }
-
-    .timeline::before {
-      content: "";
-      position: absolute;
-      left: 5px;
-      top: 0.4rem;
-      bottom: 0.4rem;
-      width: 1px;
-      background: var(--rule);
-    }
-
-    .t-entry {
-      position: relative;
-      padding-bottom: 2.6rem;
-    }
-
-    .t-entry:last-child {
-      padding-bottom: 0;
-    }
-
-    .t-entry::before {
-      content: "";
-      position: absolute;
-      left: -2rem;
-      top: 0.35rem;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: var(--paper);
-      border: 2px solid var(--accent-2);
-    }
-
-    .t-entry.current::before {
-      background: var(--accent-2);
-    }
-
-    .t-date {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.76rem;
-      color: var(--accent-2);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.3rem;
-    }
-
-    .t-head {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      margin-bottom: 0.9rem;
-    }
-
-    .t-role {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 1.25rem;
-      font-weight: 500;
-      margin-bottom: 0.1rem;
-    }
-
-    .t-org {
-      font-size: 0.9rem;
+    .section-intro {
+      font-size: 0.98rem;
       color: var(--muted);
+      margin-top: 0.6rem;
+      max-width: 60ch;
     }
 
-    .t-entry ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      max-width: 62ch;
+    /* ---------- RESULT TAG (work + experience) ---------- */
+    .work-achievement {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: var(--tag);
+      border-radius: 3px;
+      box-shadow: 0 2px 0 var(--tag-edge);
+      padding: 0.5rem 0.9rem 0.5rem 0.8rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
     }
 
-    .t-entry li {
-      font-size: 0.95rem;
-      padding-left: 1.1rem;
-      position: relative;
+    .work-achievement-num {
+      font-stretch: 72%;
+      font-weight: 800;
+      font-variant-numeric: lining-nums tabular-nums;
+      font-size: 1.75rem;
+      line-height: 1;
+      white-space: nowrap;
     }
 
-    .t-entry li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.65em;
-      width: 5px;
-      height: 5px;
-      background: var(--accent);
-    }
-
-    .case-link {
-      display: inline-block;
-      margin-top: 1rem;
-      background: none;
-      border: none;
-      padding: 0;
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.82rem;
-      color: var(--accent-2);
-      cursor: pointer;
-      text-align: left;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.15s ease;
-    }
-
-    .case-link:hover {
-      border-bottom-color: var(--accent-2);
+    .work-achievement-label {
+      font-size: 0.86rem;
+      line-height: 1.3;
+      padding-left: 0.8rem;
+      border-left: 1px dashed rgba(32, 52, 47, 0.45);
     }
 
     /* ---------- SELECTED WORK ---------- */
     .work-section {
-      padding-bottom: 1rem;
+      padding-bottom: 2rem;
+    }
+
+    .work-list {
+      max-width: 1180px;
+      margin: 0 auto;
     }
 
     .work-feature {
@@ -703,15 +382,9 @@
       grid-template-columns: 1.15fr 1fr;
       gap: 3rem;
       align-items: center;
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 3rem 1.75rem;
-      border-bottom: 1px solid var(--rule);
+      padding: 2.75rem 1.75rem;
+      border-top: 1px solid var(--rule);
       cursor: pointer;
-      background: none;
-      text-align: left;
-      font: inherit;
-      color: inherit;
     }
 
     .work-feature:nth-child(even) {
@@ -726,6 +399,7 @@
       position: relative;
       overflow: hidden;
       border: 1px solid var(--rule);
+      background: var(--paper-2);
     }
 
     .work-feature-media img {
@@ -733,110 +407,67 @@
       aspect-ratio: 16 / 9;
       object-fit: cover;
       display: block;
-      transition: transform 0.5s ease;
+      transition: transform 0.4s ease-out;
     }
 
     .work-feature-view {
       position: absolute;
-      bottom: 0.9rem;
-      right: 0.9rem;
+      bottom: 0.8rem;
+      right: 0.8rem;
       background: var(--ink);
       color: var(--paper);
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.75rem;
-      padding: 0.5rem 0.9rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.45rem 0.8rem;
+      border-radius: 2px;
       opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
+      transition: opacity 0.2s ease;
     }
 
     .work-feature:hover .work-feature-media img {
-      transform: scale(1.04);
+      transform: scale(1.03);
     }
 
     .work-feature:hover .work-feature-view,
     .work-feature:focus-visible .work-feature-view {
       opacity: 1;
-      transform: translateY(0);
+    }
+
+    .work-feature:hover .work-feature-title {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
     }
 
     .work-feature:focus-visible {
-      outline: 1px dashed var(--accent);
-      outline-offset: 4px;
-    }
-
-    .work-feature-index {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--accent);
-      margin-bottom: 0.8rem;
+      outline-offset: -2px;
     }
 
     .work-feature-logos {
       display: flex;
       gap: 0.6rem;
-      margin-bottom: 1rem;
-    }
-
-    .logo-chip {
-      height: 28px;
-      max-width: 110px;
-      object-fit: contain;
-      background: var(--paper);
-      border: 1px solid var(--rule);
-      padding: 0.35rem 0.6rem;
-    }
-
-    .logo-chip.on-dark {
-      background: var(--ink);
-      border-color: var(--rule-dark);
+      margin-bottom: 0.9rem;
     }
 
     .work-org {
-      font-size: 0.72rem;
-      color: var(--accent-2);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.8rem;
-      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
     }
 
     .work-feature-title {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(1.5rem, 2.6vw, 2rem);
-      font-weight: 500;
-      margin-bottom: 1rem;
+      font-stretch: 105%;
+      font-weight: 700;
+      font-size: clamp(1.45rem, 2.6vw, 1.85rem);
+      letter-spacing: -0.015em;
       line-height: 1.15;
-    }
-
-    .work-achievement {
-      display: flex;
-      align-items: baseline;
-      gap: 0.7rem;
-      background: var(--paper-dim);
-      border-left: 2px solid var(--accent-2);
-      padding: 0.7rem 1rem;
       margin-bottom: 1rem;
-    }
-
-    .work-achievement-num {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--accent-2);
-      white-space: nowrap;
-    }
-
-    .work-achievement-label {
-      font-size: 0.85rem;
-      color: var(--ink-soft);
-      line-height: 1.4;
     }
 
     .work-desc {
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       color: var(--muted);
-      line-height: 1.6;
       max-width: 46ch;
     }
 
@@ -844,12 +475,13 @@
       .work-feature,
       .work-feature:nth-child(even) {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-        padding: 2.2rem 1.75rem;
+        gap: 1.4rem;
+        padding: 2.2rem 1rem;
       }
       .work-feature:nth-child(even) .work-feature-media {
         order: 0;
       }
+      .work-feature-view { opacity: 1; }
     }
 
     /* ---------- LIGHTBOX ---------- */
@@ -857,7 +489,7 @@
       position: fixed;
       inset: 0;
       z-index: 100;
-      background: rgba(32, 52, 47, 0.94);
+      background: rgba(25, 41, 37, 0.96);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -882,7 +514,7 @@
       width: 100%;
       max-height: 70vh;
       object-fit: contain;
-      border: 1px solid var(--rule-dark);
+      border: 1px solid var(--rule-on-ink);
       background: #000;
     }
 
@@ -890,17 +522,16 @@
       list-style: none;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.6rem 1.2rem;
+      gap: 0.6rem 1.4rem;
       margin-top: 1.1rem;
-      padding: 0;
     }
 
     .lightbox-achievements li {
-      font-size: 0.82rem;
+      font-size: 0.88rem;
       color: var(--paper);
       padding-left: 1rem;
       position: relative;
-      max-width: 30ch;
+      max-width: 32ch;
     }
 
     .lightbox-achievements li::before {
@@ -910,27 +541,30 @@
       top: 0.55em;
       width: 6px;
       height: 6px;
-      background: var(--accent);
+      background: var(--tag);
     }
 
     .lightbox-caption {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
+      gap: 1rem;
       margin-top: 1rem;
-      color: var(--paper);
-      border-top: 1px solid var(--rule-dark);
+      border-top: 1px solid var(--rule-on-ink);
       padding-top: 0.8rem;
     }
 
     .lightbox-title {
-      font-size: 0.85rem;
+      font-size: 0.95rem;
+      font-weight: 600;
       color: var(--paper);
     }
 
     .lightbox-count {
-      font-size: 0.75rem;
-      color: var(--muted);
+      font-size: 0.85rem;
+      color: var(--muted-on-ink);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
     }
 
     .lightbox-close {
@@ -940,32 +574,32 @@
       background: none;
       border: none;
       color: var(--paper);
-      font-size: 1.3rem;
+      font: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
       cursor: pointer;
-      line-height: 1;
       padding: 0.5rem;
     }
 
-    .lightbox-close:hover {
-      color: var(--accent);
-    }
+    .lightbox-close:hover { color: var(--tag); }
 
     .lightbox-nav {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(32, 52, 47, 0.6);
-      border: 1px solid var(--rule-dark);
+      background: var(--ink);
+      border: 1px solid var(--rule-on-ink);
       color: var(--paper);
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       width: 2.6rem;
       height: 2.6rem;
       cursor: pointer;
       line-height: 1;
+      border-radius: 2px;
     }
 
     .lightbox-nav:hover {
-      background: var(--accent);
+      background: var(--tag);
       color: var(--ink);
     }
 
@@ -973,18 +607,230 @@
     .lightbox-next { right: -0.5rem; }
 
     @media (max-width: 700px) {
-      .lightbox-prev { left: -1.6rem; }
-      .lightbox-next { right: -1.6rem; }
-      .lightbox-nav { width: 2.2rem; height: 2.2rem; font-size: 1.4rem; }
+      .lightbox { padding: 1rem; }
+      .lightbox-prev { left: 0.3rem; }
+      .lightbox-next { right: 0.3rem; }
+      .lightbox-nav { width: 2.2rem; height: 2.2rem; font-size: 1.3rem; }
     }
 
-    /* ---------- DARK BAND (education / involvement) ---------- */
+    /* ---------- EXPERIENCE TIMELINE ---------- */
+    .filter-hint {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin: -1rem 0 2.2rem;
+      min-height: 1.6em;
+    }
+
+    .filter-hint.active {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      width: 1px;
+      background: var(--rule);
+    }
+
+    .t-entry {
+      position: relative;
+      padding-bottom: 2.6rem;
+      transition: opacity 0.25s ease;
+    }
+
+    .t-entry:last-child { padding-bottom: 0; }
+
+    .t-entry::before {
+      content: "";
+      position: absolute;
+      left: -2rem;
+      top: 0.4rem;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 2px solid var(--ink);
+    }
+
+    .t-entry.dimmed { opacity: 0.3; }
+
+    .t-entry.match::before {
+      background: var(--tag);
+      border-color: var(--ink);
+      box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px var(--tag-edge);
+    }
+
+    .t-date {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 0.4rem;
+    }
+
+    .t-head {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .t-role {
+      font-stretch: 105%;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+
+    .t-org {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .t-entry ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      max-width: 62ch;
+    }
+
+    .t-entry li {
+      font-size: 0.97rem;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+
+    .t-entry li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.7em;
+      width: 6px;
+      height: 1.5px;
+      background: var(--ink);
+    }
+
+    .case-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      text-align: left;
+      text-decoration: underline;
+      text-decoration-color: var(--tag-edge);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+    }
+
+    .case-link:hover { text-decoration-color: var(--ink); }
+
+    /* ---------- ABOUT ---------- */
+    .about {
+      background: var(--paper-2);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 3.5rem;
+      align-items: start;
+      margin-bottom: 3.5rem;
+    }
+
+    .about-photos {
+      position: relative;
+      padding: 0.5rem 1.5rem 2.5rem 0;
+    }
+
+    .about-photo {
+      display: block;
+      width: 82%;
+      border: 6px solid #fff;
+      box-shadow: 0 6px 18px rgba(32, 52, 47, 0.15);
+      object-fit: cover;
+    }
+
+    .about-photo-1 {
+      aspect-ratio: 3 / 4;
+      transform: rotate(-2.5deg);
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-photo-2 {
+      aspect-ratio: 4 / 3;
+      width: 70%;
+      transform: rotate(3deg);
+      margin: -3.5rem 0 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-copy p {
+      font-size: 1.15rem;
+      line-height: 1.65;
+      max-width: 58ch;
+    }
+
+    .about-copy p + p { margin-top: 1.1rem; }
+
+    .about-copy strong { font-weight: 650; }
+
+    .focus-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      padding-top: 2.2rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .focus-title {
+      font-stretch: 105%;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .focus-desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 700px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .about-photos {
+        padding: 0.5rem 0 1rem;
+        display: flex;
+        gap: 1rem;
+      }
+      .about-photo-1, .about-photo-2 { width: 48%; margin: 0; }
+      .about-photo-1 { transform: rotate(-2deg); }
+      .about-photo-2 { transform: rotate(2deg); align-self: flex-end; }
+      .focus-list { grid-template-columns: 1fr; gap: 1.6rem; }
+    }
+
+    /* ---------- EDUCATION & INVOLVEMENT (dark band) ---------- */
     .band-dark {
       background: var(--ink);
-      color: var(--paper);
-    }
-
-    .band-dark .section-head h2 {
       color: var(--paper);
     }
 
@@ -999,19 +845,27 @@
     }
 
     .block-title {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      margin-bottom: 1.2rem;
+      font-stretch: 105%;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--paper);
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--rule-on-ink);
+    }
+
+    .block-title-hint {
+      font-stretch: 100%;
+      font-weight: 400;
+      font-size: 0.9rem;
+      color: var(--muted-on-ink);
     }
 
     .involve-head {
       display: flex;
       align-items: center;
       gap: 0.7rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .logo-chip.monogram {
@@ -1019,47 +873,43 @@
       align-items: center;
       justify-content: center;
       width: 28px;
-      padding: 0.35rem;
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: var(--accent-2);
-      letter-spacing: 0.02em;
+      padding: 0.3rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--ink);
     }
 
     .school {
-      font-family: "Fraunces", Georgia, serif;
+      font-stretch: 105%;
       font-size: 1.35rem;
-      font-weight: 500;
+      font-weight: 700;
     }
 
-    .school-loc {
-      font-size: 0.85rem;
-      color: #a39d8c;
-      margin-bottom: 0.6rem;
-    }
-
-    .degree {
-      font-size: 0.98rem;
-      margin-bottom: 0.15rem;
-    }
-
-    .degree-date {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.78rem;
-      color: var(--accent);
-      margin-bottom: 0.9rem;
-    }
-
+    .school-loc,
+    .involve-role,
     .coursework {
-      font-size: 0.9rem;
-      color: #b7b2a3;
+      font-size: 0.92rem;
+      color: var(--muted-on-ink);
     }
+
+    .school-loc { margin-bottom: 0.7rem; }
+
+    .degree { font-size: 1rem; font-weight: 500; }
+
+    .degree-date,
+    .involve-date {
+      font-size: 0.9rem;
+      color: var(--muted-on-ink);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 0.8rem;
+    }
+
+    .involve-date { margin: 0.15rem 0 0; }
 
     .involve-item {
-      margin-bottom: 1.2rem;
-      padding-bottom: 1.2rem;
-      border-bottom: 1px solid var(--rule-dark);
+      margin-bottom: 1.1rem;
+      padding-bottom: 1.1rem;
+      border-bottom: 1px solid var(--rule-on-ink);
     }
 
     .involve-item:last-child {
@@ -1068,212 +918,147 @@
       padding-bottom: 0;
     }
 
-    .involve-org {
-      font-size: 1rem;
-      font-weight: 600;
-    }
+    .involve-org { font-size: 1rem; font-weight: 600; }
 
-    .involve-role {
-      font-size: 0.86rem;
-      color: #b7b2a3;
-    }
-
-    .involve-date {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.72rem;
-      color: var(--accent);
-    }
-
-    /* Skills as bracket tags */
     .skills-row {
       margin-top: 3rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid var(--rule-dark);
+    }
+
+    .cert-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 2rem;
+      font-size: 0.97rem;
     }
 
     .tag-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.9rem 1.4rem;
+      gap: 0.6rem;
     }
 
     .tag {
-      font-family: "IBM Plex Mono", monospace;
+      font: inherit;
       font-size: 0.92rem;
+      font-weight: 500;
       color: var(--paper);
-      transition: color 0.15s ease, transform 0.15s ease;
-      background: none;
-      border: none;
+      background: transparent;
+      border: 1px solid var(--rule-on-ink);
+      border-radius: 3px;
+      padding: 0.45rem 0.85rem;
       cursor: pointer;
-      padding: 0.2rem 0;
+      transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
     }
 
-    .tag::before { content: "["; color: var(--accent); }
-    .tag::after { content: "]"; color: var(--accent); }
-
-    .tag:hover {
-      color: var(--accent);
-    }
-
-    span.tag {
-      cursor: default;
-      display: inline-block;
-    }
-
-    span.tag:hover {
-      color: var(--paper);
-    }
-
-    .tag:focus-visible {
-      outline: 1px dashed var(--accent);
-      outline-offset: 3px;
-    }
+    .tag:hover { border-color: var(--paper); }
 
     .tag.active {
+      background: var(--tag);
+      border-color: var(--tag);
       color: var(--ink);
-      background: var(--accent);
-      transform: translateY(-1px);
+      font-weight: 600;
     }
 
-    .tag.active::before,
-    .tag.active::after {
-      color: var(--ink);
-    }
-
-    .block-title-hint {
-      color: var(--muted);
-      text-transform: none;
-      letter-spacing: normal;
-      font-size: 0.8rem;
-    }
-
-    .filter-hint {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin: -1.7rem 0 2.2rem;
-      min-height: 1.2em;
-      font-style: italic;
-    }
-
-    .filter-hint.active {
-      color: var(--accent-2);
-    }
-
-    .t-entry {
-      transition: opacity 0.3s ease;
-    }
-
-    .t-entry.dimmed {
-      opacity: 0.28;
-    }
-
-    .t-entry.match::before {
-      background: var(--accent);
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(229, 154, 60, 0.3);
-    }
-
-    /* ---------- FOOTER / CTA ---------- */
+    /* ---------- FOOTER ---------- */
     footer {
-      background: var(--paper);
-      padding: 5rem 0 3rem;
-      text-align: center;
+      padding: 4.5rem 0 3rem;
     }
 
     .cta-line {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      font-weight: 500;
-      margin-bottom: 1.8rem;
+      font-stretch: 112%;
+      font-size: clamp(1.8rem, 4.6vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      max-width: 22ch;
+      margin-bottom: 1.6rem;
     }
 
-    .cta-line em {
-      font-style: italic;
-      color: var(--accent-2);
-    }
-
-    footer .btn-row {
-      justify-content: center;
-      margin-bottom: 3rem;
-    }
+    footer .btn-row { margin-bottom: 3rem; }
 
     .btn-solid.dark {
       background: var(--ink);
+      border-color: var(--ink);
       color: var(--paper);
     }
 
-    .btn-solid.dark:hover {
-      background: var(--ink-soft);
-    }
+    .btn-solid.dark:hover { background: var(--ink-2); }
 
     .btn-line.dark {
       border-color: var(--rule);
       color: var(--ink);
     }
 
-    .btn-line.dark:hover {
-      border-color: var(--ink);
-    }
+    .btn-line.dark:hover { border-color: var(--ink); }
 
     .foot-note {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.76rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem 1.6rem;
+      font-size: 0.9rem;
       color: var(--muted);
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .foot-note a { text-underline-offset: 3px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+      .js .reveal { opacity: 1; transform: none; }
+      .work-feature:hover .work-feature-media img { transform: none; }
     }
   </style>
 </head>
 <body>
-  <nav class="top">
+  <nav class="top" aria-label="Main">
     <div class="nav-inner">
       <a class="nav-mark" href="#top">Kiefer Ryan</a>
       <ul class="nav-links">
         <li><a href="#work">Work</a></li>
-        <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
+        <li><a href="#about">About</a></li>
         <li><a href="#education">Education</a></li>
-        <li><a href="#involvement">Involvement</a></li>
+        <li><a href="assets/Kiefer-Ryan-Resume.pdf" target="_blank" rel="noopener">Résumé</a></li>
       </ul>
     </div>
   </nav>
 
   <header class="hero" id="top">
-    <span class="hero-watermark">INSIGHTS</span>
-    <div class="wrap hero-inner">
-      <p class="hero-kicker">Seeking CPG internships &amp; co-ops · 2027</p>
-      <h1 class="hero-name">Turning data into <em>decisions</em>.</h1>
-      <p class="hero-sub">
-        I'm <strong>Kiefer Ryan</strong>, a Marketing &amp; Business Analytics student at Xavier University
-        building toward a career in <strong>category management</strong> and <strong>retail analytics</strong> —
-        with real reps at Bob Evans and Kroger, and a stack of category and brand case work to back it up.
-      </p>
-      <div class="btn-row">
-        <a class="btn btn-solid" href="#work">See the work →</a>
-        <a class="btn btn-line" href="assets/Kiefer-Ryan-Resume.pdf" target="_blank" rel="noopener">Download résumé</a>
-        <a class="btn btn-line" href="mailto:ryank29@xavier.edu">Say hello</a>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="hero-status">Looking for CPG internships and co-ops for 2027</p>
+        <h1 class="hero-name">Kiefer Ryan</h1>
+        <p class="hero-sub">
+          Marketing &amp; Business Analytics student at Xavier University, working toward
+          <strong>category management</strong> and <strong>retail analytics</strong>. I've done the work
+          at <strong>Bob Evans</strong> and <strong>Kroger</strong>, and built four category and brand cases
+          for CPG companies.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn-solid" href="#work">See the work</a>
+          <a class="btn btn-line" href="assets/Kiefer-Ryan-Resume.pdf" target="_blank" rel="noopener">Download résumé</a>
+          <a class="btn btn-line" href="mailto:ryank29@xavier.edu">Email me</a>
+        </div>
       </div>
+
+      <aside class="shelf-tag" aria-label="Featured result">
+        <p class="shelf-tag-what">Air care category, analyzed for Kroger and Reckitt</p>
+        <p class="shelf-tag-price fig">$1.65<sup>B</sup></p>
+        <p class="shelf-tag-unit"><span>Unit price</span><span><span class="fig">$6M</span> per share point</span></p>
+        <button type="button" class="shelf-tag-link" data-open-project="aircare">See the case study</button>
+      </aside>
     </div>
   </header>
 
-  <div class="marquee">
-    <div class="marquee-track">
-      <span class="marquee-item">Category Analysis</span>
-      <span class="marquee-item">Consumer Insights</span>
-      <span class="marquee-item">Category Management</span>
-      <span class="marquee-item">Social Strategy</span>
-      <span class="marquee-item">Retail Analytics</span>
-      <span class="marquee-item">Brand Building</span>
-      <span class="marquee-item">Category Analysis</span>
-      <span class="marquee-item">Consumer Insights</span>
-      <span class="marquee-item">Category Management</span>
-      <span class="marquee-item">Social Strategy</span>
-      <span class="marquee-item">Retail Analytics</span>
-      <span class="marquee-item">Brand Building</span>
-    </div>
-  </div>
-
-  <section class="proof-strip reveal">
+  <section class="proof-strip">
     <div class="wrap proof-inner">
-      <p class="proof-label mono">Real category &amp; brand work for</p>
+      <p class="proof-label">Category and brand work for</p>
       <div class="proof-logos">
         <img class="logo-chip" src="images/logos/kroger.svg" alt="Kroger" />
         <img class="logo-chip" src="images/logos/bobevans.svg" alt="Bob Evans Farms" />
@@ -1283,213 +1068,118 @@
     </div>
   </section>
 
-  <section class="stats reveal">
-    <div class="wrap stats-layout">
-      <div class="stat-hero">
-        <p class="stat-hero-num" data-count-to="1.65" data-prefix="$" data-suffix="B">$0B</p>
-        <p class="stat-hero-label">Retail category analyzed for Kroger's air care business — down to what one share point is worth in dollars</p>
-      </div>
-      <div class="stats-grid">
-        <div>
-          <p class="stat-num">4</p>
-          <p class="stat-label">CPG category &amp; brand case projects delivered</p>
-        </div>
-        <div>
-          <p class="stat-num">3,500+</p>
-          <p class="stat-label">Monthly newsletter subscribers reached</p>
-        </div>
-        <div>
-          <p class="stat-num">2027</p>
-          <p class="stat-label">Expected graduation, Xavier University</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="statement reveal">
-    <div class="wrap statement-inner">
-      <div class="statement-media">
-        <img src="images/about/zion.jpg" alt="Kiefer Ryan hiking at Zion National Park" loading="lazy" />
-      </div>
-      <div class="statement-body">
-        <p class="statement-kicker mono">Hi, I'm Kiefer</p>
-        <p class="statement-text">
-          On paper, I've built the category strategy a <strong>$1.65B Kroger business</strong> acted on and the
-          brand relaunch case for a <strong>top-5 U.S. spirits company</strong>. Off paper, I'm usually planning
-          the next national park trip or training for the next race.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <section class="section work-section" id="work">
     <div class="wrap">
-      <div class="section-head reveal">
-        <span class="section-num mono">01</span>
-        <h2>Selected Work</h2>
-      </div>
-      <p class="filter-hint mono reveal">Click any project to walk through the full case + key results →</p>
-    </div>
-
-    <div class="work-feature reveal" data-project="aircare" role="button" tabindex="0">
-      <div class="work-feature-media">
-        <img src="images/work/aircare-1.jpg" alt="Kroger Air Care category review cover slide" loading="lazy" />
-        <span class="work-feature-view">View case →</span>
-      </div>
-      <div class="work-feature-body">
-        <span class="work-feature-index mono">01</span>
-        <div class="work-feature-logos">
-          <img class="logo-chip" src="images/logos/kroger.svg" alt="Kroger" />
-          <img class="logo-chip" src="images/logos/reckitt.svg" alt="Reckitt" />
-        </div>
-        <h3 class="work-feature-title">Air Care Category Review</h3>
-        <div class="work-achievement">
-          <span class="work-achievement-num">$1.65B</span>
-          <span class="work-achievement-label">category analyzed — found 1 pt of share-of-wallet is worth $6M</span>
-        </div>
-        <p class="work-desc">Built 3 data-backed recommendations projected to lift household penetration +2 pts and sales +6%, presented directly to Kroger and Reckitt's category teams.</p>
+      <div class="section-head">
+        <h2>Selected work</h2>
+        <p class="section-intro">Four CPG category and brand cases. Click one to page through its slides and results.</p>
       </div>
     </div>
 
-    <div class="work-feature reveal" data-project="rum" role="button" tabindex="0">
-      <div class="work-feature-media">
-        <img src="images/work/rum-1.jpg" alt="Reimagining Myers's Rum cover slide" loading="lazy" />
-        <span class="work-feature-view">View case →</span>
-      </div>
-      <div class="work-feature-body">
-        <span class="work-feature-index mono">02</span>
-        <div class="work-feature-logos">
-          <img class="logo-chip" src="images/logos/sazerac-word.png" alt="Sazerac" />
+    <div class="work-list">
+      <div class="work-feature reveal" data-project="aircare" role="button" tabindex="0">
+        <div class="work-feature-media">
+          <img src="images/work/aircare-1.jpg" alt="Kroger Air Care category review cover slide" loading="lazy" />
+          <span class="work-feature-view">View slides</span>
         </div>
-        <h3 class="work-feature-title">Reimagining Myers's Rum</h3>
-        <div class="work-achievement">
-          <span class="work-achievement-num">3 tiers</span>
-          <span class="work-achievement-label">of portfolio decline diagnosed, down to a 4-pillar relaunch strategy</span>
+        <div class="work-feature-body">
+          <div class="work-feature-logos">
+            <img class="logo-chip" src="images/logos/kroger.svg" alt="Kroger" />
+            <img class="logo-chip" src="images/logos/reckitt.svg" alt="Reckitt" />
+          </div>
+          <h3 class="work-feature-title">Air Care Category Review</h3>
+          <div class="work-achievement">
+            <span class="work-achievement-num">$1.65B</span>
+            <span class="work-achievement-label">category analyzed; found 1 pt of share-of-wallet is worth $6M</span>
+          </div>
+          <p class="work-desc">Built 3 data-backed recommendations projected to lift household penetration +2 pts and sales +6%, presented directly to Kroger and Reckitt's category teams.</p>
         </div>
-        <p class="work-desc">Competitive benchmarking, rebrand, packaging, and go-to-market plan for a spirits brand losing share across its core, trial, and premium lines.</p>
       </div>
-    </div>
 
-    <div class="work-feature reveal" data-project="rios" role="button" tabindex="0">
-      <div class="work-feature-media">
-        <img src="images/work/rios-1.jpg" alt="Rios rum RTD concept cover slide" loading="lazy" />
-        <span class="work-feature-view">View case →</span>
-      </div>
-      <div class="work-feature-body">
-        <span class="work-feature-index mono">03</span>
-        <div class="work-feature-logos">
-          <img class="logo-chip" src="images/logos/sazerac-word.png" alt="Sazerac" />
+      <div class="work-feature reveal" data-project="rum" role="button" tabindex="0">
+        <div class="work-feature-media">
+          <img src="images/work/rum-1.jpg" alt="Reimagining Myers's Rum cover slide" loading="lazy" />
+          <span class="work-feature-view">View slides</span>
         </div>
-        <h3 class="work-feature-title">Rios — The Best Rum RTD</h3>
-        <div class="work-achievement">
-          <span class="work-achievement-num">#1</span>
-          <span class="work-achievement-label">spirit by Gen Z "enthusiast" interest — the whitespace behind the concept</span>
+        <div class="work-feature-body">
+          <div class="work-feature-logos">
+            <img class="logo-chip" src="images/logos/sazerac-word.png" alt="Sazerac" />
+          </div>
+          <h3 class="work-feature-title">Reimagining Myers's Rum</h3>
+          <div class="work-achievement">
+            <span class="work-achievement-num">3 tiers</span>
+            <span class="work-achievement-label">of portfolio decline diagnosed, down to a 4-pillar relaunch strategy</span>
+          </div>
+          <p class="work-desc">Competitive benchmarking, rebrand, packaging, and go-to-market plan for a spirits brand losing share across its core, trial, and premium lines.</p>
         </div>
-        <p class="work-desc">Full RTD go-to-market built from primary consumer research: positioning, flavors, pricing, and a live prototype site.</p>
       </div>
-    </div>
 
-    <div class="work-feature reveal" data-project="lo" role="button" tabindex="0">
-      <div class="work-feature-media">
-        <img src="images/work/lo-1.jpg" alt="LO beverage brand concept cover slide" loading="lazy" />
-        <span class="work-feature-view">View case →</span>
-      </div>
-      <div class="work-feature-body">
-        <span class="work-feature-index mono">04</span>
-        <p class="work-org mono">Independent Concept</p>
-        <h3 class="work-feature-title">LO: The Better Choice</h3>
-        <div class="work-achievement">
-          <span class="work-achievement-num">53%</span>
-          <span class="work-achievement-label">YoY rise in Gen Z drinking less — the insight the whole concept was built on</span>
+      <div class="work-feature reveal" data-project="rios" role="button" tabindex="0">
+        <div class="work-feature-media">
+          <img src="images/work/rios-1.jpg" alt="Rios rum RTD concept cover slide" loading="lazy" />
+          <span class="work-feature-view">View slides</span>
         </div>
-        <p class="work-desc">Low-cal, aloe-infused tequila seltzer concept: positioning, flavor testing, pricing, and shelf strategy.</p>
+        <div class="work-feature-body">
+          <div class="work-feature-logos">
+            <img class="logo-chip" src="images/logos/sazerac-word.png" alt="Sazerac" />
+          </div>
+          <h3 class="work-feature-title">Rios: The Best Rum RTD</h3>
+          <div class="work-achievement">
+            <span class="work-achievement-num">#1</span>
+            <span class="work-achievement-label">spirit by Gen Z "enthusiast" interest, the whitespace behind the concept</span>
+          </div>
+          <p class="work-desc">Full RTD go-to-market built from primary consumer research: positioning, flavors, pricing, and a live prototype site.</p>
+        </div>
+      </div>
+
+      <div class="work-feature reveal" data-project="lo" role="button" tabindex="0">
+        <div class="work-feature-media">
+          <img src="images/work/lo-1.jpg" alt="LO beverage brand concept cover slide" loading="lazy" />
+          <span class="work-feature-view">View slides</span>
+        </div>
+        <div class="work-feature-body">
+          <p class="work-org">Independent concept</p>
+          <h3 class="work-feature-title">LO: The Better Choice</h3>
+          <div class="work-achievement">
+            <span class="work-achievement-num">53%</span>
+            <span class="work-achievement-label">YoY rise in Gen Z drinking less, the insight the whole concept was built on</span>
+          </div>
+          <p class="work-desc">Low-cal, aloe-infused tequila seltzer concept: positioning, flavor testing, pricing, and shelf strategy.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title" aria-hidden="true">
     <div class="lightbox-inner">
-      <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
-      <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous image">‹</button>
+      <button type="button" class="lightbox-close" id="lightbox-close">Close</button>
+      <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous slide">‹</button>
       <img class="lightbox-img" id="lightbox-img" src="" alt="" />
-      <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next image">›</button>
+      <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next slide">›</button>
       <ul class="lightbox-achievements" id="lightbox-achievements"></ul>
       <div class="lightbox-caption">
-        <p class="lightbox-title mono" id="lightbox-title"></p>
-        <p class="lightbox-count mono" id="lightbox-count"></p>
+        <p class="lightbox-title" id="lightbox-title"></p>
+        <p class="lightbox-count" id="lightbox-count"></p>
       </div>
     </div>
   </div>
 
-
-  <section class="about" id="about">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="section-num mono">02</span>
-        <h2>About Me</h2>
-      </div>
-
-      <div class="about-grid">
-        <div class="about-photos reveal">
-          <img class="about-photo about-photo-1" src="images/about/marathon.jpg" alt="Kiefer Ryan after finishing the Flying Pig Marathon in Cincinnati" loading="lazy" />
-          <img class="about-photo about-photo-2" src="images/about/bryce.jpg" alt="Kiefer Ryan hiking at Bryce Canyon National Park" loading="lazy" />
-        </div>
-        <div class="about-copy reveal">
-          <p>
-            I'm looking for my next step in <strong>CPG category management</strong> — the moment a spreadsheet
-            turns into a shelf decision. At <strong>Bob Evans</strong> and <strong>Kroger</strong>, that meant
-            reading Circana, Numerator, and Mintel data to find where demand and competitive positioning
-            actually sit, then turning it into recommendations retail and brand teams could act on.
-          </p>
-          <p>
-            Outside of work, I'm chasing national parks — <strong>Zion's Angels Landing</strong> is the best
-            hike I've done so far, and there's always another trip in the works. I race regularly too; the
-            <strong>Flying Pig Marathon</strong> in Cincinnati is the most recent finish line. When I'm not
-            outside, I'm cooking, watching Xavier basketball, or keeping tabs on Boston's teams. I also lead
-            engagement for Xavier's <strong>American Marketing Association</strong> chapter, I'm a member of
-            <strong>Delta Sigma Pi</strong>, and — a little less on the resume — I suit up as
-            <strong>D'Artagnan</strong>, Xavier's mascot, to hype up crowds on game day.
-          </p>
-        </div>
-      </div>
-
-      <div class="focus-list reveal">
-        <div class="focus-item">
-          <p class="focus-num">Category Management</p>
-          <p class="focus-title">Category &amp; Shopper Analytics</p>
-          <p class="focus-desc">Reading Circana, Numerator, and Mintel data to find where category demand and competitive positioning actually are.</p>
-        </div>
-        <div class="focus-item">
-          <p class="focus-num">Brand Strategy</p>
-          <p class="focus-title">Positioning &amp; Portfolio Strategy</p>
-          <p class="focus-desc">Diagnosing brands in decline and building the case for where they win next — pricing, packaging, and go-to-market.</p>
-        </div>
-        <div class="focus-item">
-          <p class="focus-num">Marketing</p>
-          <p class="focus-title">Content &amp; Campaign Strategy</p>
-          <p class="focus-desc">Publishing newsletters and social campaigns that grow reach without losing message discipline.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="experience">
     <div class="wrap">
-      <div class="section-head reveal">
-        <span class="section-num mono">03</span>
+      <div class="section-head">
         <h2>Experience</h2>
       </div>
 
-      <p class="filter-hint mono reveal" id="filter-hint">Click a skill below to see where I've actually used it →</p>
+      <p class="filter-hint" id="filter-hint" aria-live="polite">Pick a skill under Education &amp; Involvement to see which roles used it.</p>
 
       <div class="timeline" id="timeline">
-        <div class="t-entry reveal" data-skills="circana ms365">
-          <p class="t-date">June — August 2026</p>
+        <div class="t-entry" data-skills="circana ms365">
+          <p class="t-date">June to August 2026</p>
           <div class="t-head">
             <img class="logo-chip" src="images/logos/bobevans.svg" alt="Bob Evans Farms" />
             <div>
               <p class="t-role">Category &amp; Sales Intern</p>
-              <p class="t-org">Bob Evans Farms Inc. · Columbus, OH</p>
+              <p class="t-org">Bob Evans Farms Inc., Columbus, OH</p>
             </div>
           </div>
           <div class="work-achievement">
@@ -1502,13 +1192,13 @@
           </ul>
         </div>
 
-        <div class="t-entry reveal" data-skills="mailchimp gsuite">
-          <p class="t-date">January — August 2025</p>
+        <div class="t-entry" data-skills="mailchimp gsuite">
+          <p class="t-date">January to August 2025</p>
           <div class="t-head">
             <img class="logo-chip on-dark" src="images/logos/leadadvisor.webp" alt="Lead Advisor Consulting" />
             <div>
               <p class="t-role">Intern Associate</p>
-              <p class="t-org">Lead Advisor Consulting · Boston, MA</p>
+              <p class="t-org">Lead Advisor Consulting, Boston, MA</p>
             </div>
           </div>
           <div class="work-achievement">
@@ -1521,29 +1211,29 @@
           </ul>
         </div>
 
-        <div class="t-entry reveal" data-skills="numerator circana">
+        <div class="t-entry" data-skills="numerator circana">
           <p class="t-date">Spring 2025</p>
           <div class="t-head">
             <img class="logo-chip" src="images/logos/kroger.svg" alt="Kroger" />
             <div>
               <p class="t-role">Category Analyst Consultant</p>
-              <p class="t-org">Kroger · Cincinnati, OH</p>
+              <p class="t-org">Kroger, Cincinnati, OH</p>
             </div>
           </div>
           <ul>
             <li>Identified SKUs with higher demand across America utilizing Numerator, Circana, and Mintel reports</li>
             <li>Conducted category analysis to build customer-centric insights and recommend strategies for driving sales and competitive positioning</li>
           </ul>
-          <button type="button" class="case-link" data-open-project="aircare">This became a real Kroger × Reckitt deliverable — see the full case study →</button>
+          <button type="button" class="case-link" data-open-project="aircare">This became a real Kroger and Reckitt deliverable. See the case study</button>
         </div>
 
-        <div class="t-entry reveal" data-skills="canva adobe">
-          <p class="t-date">Xavier University Coursework</p>
+        <div class="t-entry" data-skills="canva adobe">
+          <p class="t-date">Xavier University coursework</p>
           <div class="t-head">
             <img class="logo-chip" src="images/logos/reds.svg" alt="Cincinnati Reds" />
             <div>
               <p class="t-role">Brand &amp; Marketing Case Analysis</p>
-              <p class="t-org">Cincinnati Reds · Class Project</p>
+              <p class="t-org">Cincinnati Reds, class project</p>
             </div>
           </div>
           <ul>
@@ -1552,13 +1242,13 @@
           </ul>
         </div>
 
-        <div class="t-entry reveal" data-skills="meta canva">
-          <p class="t-date">November 2022 — May 2023</p>
+        <div class="t-entry" data-skills="meta canva">
+          <p class="t-date">November 2022 to May 2023</p>
           <div class="t-head">
             <img class="logo-chip" src="images/logos/falmouthchamber.png" alt="Falmouth Chamber of Commerce" />
             <div>
               <p class="t-role">Marketing Intern</p>
-              <p class="t-org">Falmouth Chamber of Commerce · Falmouth, MA</p>
+              <p class="t-org">Falmouth Chamber of Commerce, Falmouth, MA</p>
             </div>
           </div>
           <div class="work-achievement">
@@ -1571,14 +1261,14 @@
           </ul>
         </div>
 
-        <div class="t-entry reveal" data-skills="">
-          <p class="t-date">May 2021 — 2025</p>
+        <div class="t-entry" data-skills="">
+          <p class="t-date">May 2021 to 2025</p>
           <div class="t-head">
             <img class="logo-chip" src="images/logos/papaginos.png" alt="Papa Gino's" />
             <img class="logo-chip" src="images/logos/dangelos.png" alt="D'Angelo's" />
             <div>
               <p class="t-role">Team Member</p>
-              <p class="t-org">Papa Gino's &amp; D'Angelo's · Falmouth, MA</p>
+              <p class="t-org">Papa Gino's &amp; D'Angelo's, Falmouth, MA</p>
             </div>
           </div>
           <div class="work-achievement">
@@ -1587,8 +1277,55 @@
           </div>
           <ul>
             <li>Grill cook, pizza maker, POS operation, cash handling, and delivery driver</li>
-            <li>Managed catering orders end-to-end — order taking, prep, and ensuring customer satisfaction</li>
+            <li>Managed catering orders end-to-end: order taking, prep, and ensuring customer satisfaction</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about" id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>About</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-photos">
+          <img class="about-photo about-photo-1" src="images/about/marathon.jpg" alt="Kiefer Ryan after finishing the Flying Pig Marathon in Cincinnati" loading="lazy" />
+          <img class="about-photo about-photo-2" src="images/about/bryce.jpg" alt="Kiefer Ryan hiking at Bryce Canyon National Park" loading="lazy" />
+        </div>
+        <div class="about-copy">
+          <p>
+            I'm looking for my next step in <strong>CPG category management</strong>: the moment a spreadsheet
+            turns into a shelf decision. At <strong>Bob Evans</strong> and <strong>Kroger</strong>, that meant
+            reading Circana, Numerator, and Mintel data to find where demand and competitive positioning
+            actually sit, then turning it into recommendations retail and brand teams could act on.
+          </p>
+          <p>
+            Outside of work, I'm chasing national parks. <strong>Zion's Angels Landing</strong> is the best
+            hike I've done so far, and there's always another trip in the works. I race regularly too; the
+            <strong>Flying Pig Marathon</strong> in Cincinnati is the most recent finish line. When I'm not
+            outside, I'm cooking, watching Xavier basketball, or keeping tabs on Boston's teams. I also lead
+            engagement for Xavier's <strong>American Marketing Association</strong> chapter, I'm a member of
+            <strong>Delta Sigma Pi</strong>, and, a little less on the résumé, I suit up as
+            <strong>D'Artagnan</strong>, Xavier's mascot, to hype up crowds on game day.
+          </p>
+        </div>
+      </div>
+
+      <div class="focus-list">
+        <div class="focus-item">
+          <p class="focus-title">Category &amp; shopper analytics</p>
+          <p class="focus-desc">Reading Circana, Numerator, and Mintel data to find where category demand and competitive positioning actually are.</p>
+        </div>
+        <div class="focus-item">
+          <p class="focus-title">Positioning &amp; portfolio strategy</p>
+          <p class="focus-desc">Diagnosing brands in decline and building the case for where they win next: pricing, packaging, and go-to-market.</p>
+        </div>
+        <div class="focus-item">
+          <p class="focus-title">Content &amp; campaign strategy</p>
+          <p class="focus-desc">Publishing newsletters and social campaigns that grow reach without losing message discipline.</p>
         </div>
       </div>
     </div>
@@ -1596,12 +1333,11 @@
 
   <section class="section band-dark" id="education">
     <div class="wrap">
-      <div class="section-head reveal">
-        <span class="section-num mono">04</span>
-        <h2>Education &amp; Involvement</h2>
+      <div class="section-head">
+        <h2>Education &amp; involvement</h2>
       </div>
 
-      <div class="two-up reveal">
+      <div class="two-up">
         <div>
           <p class="block-title">Education</p>
           <div class="involve-head">
@@ -1618,51 +1354,51 @@
           <p class="block-title">Involvement</p>
           <div class="involve-item">
             <div class="involve-head">
-              <span class="logo-chip monogram">ΔΣΠ</span>
+              <span class="logo-chip monogram" aria-hidden="true">ΔΣΠ</span>
               <p class="involve-org">Delta Sigma Pi Professional Fraternity</p>
             </div>
             <p class="involve-role">Standards Committee &amp; Professional Committee</p>
-            <p class="involve-date">2024 — Present</p>
+            <p class="involve-date">2024 to present</p>
           </div>
           <div class="involve-item">
             <div class="involve-head">
               <img class="logo-chip on-dark" src="images/logos/ama.png" alt="American Marketing Association" />
               <p class="involve-org">American Marketing Association</p>
             </div>
-            <p class="involve-role">Engagement Director · Member, National &amp; Xavier Chapter</p>
-            <p class="involve-date">2026 — Present · Member since 2023</p>
+            <p class="involve-role">Engagement Director; member of the national and Xavier chapters</p>
+            <p class="involve-date">Director 2026 to present, member since 2023</p>
           </div>
           <div class="involve-item">
             <div class="involve-head">
               <img class="logo-chip" src="images/logos/xavier.png" alt="Xavier University Athletics" />
               <p class="involve-org">Xavier University Athletics</p>
             </div>
-            <p class="involve-role">Costumed Mascot Performer · D'Artagnan</p>
-            <p class="involve-date">2025 — Present</p>
+            <p class="involve-role">Costumed mascot performer, D'Artagnan</p>
+            <p class="involve-date">2025 to present</p>
           </div>
         </div>
       </div>
 
-      <div class="skills-row reveal">
+      <div class="skills-row">
         <p class="block-title">Certifications</p>
-        <div class="tag-row cert-row">
-          <span class="tag cert-tag">Circana Unify+ Professional</span>
-          <span class="tag cert-tag">Circana Unify+ Specialist</span>
-          <span class="tag cert-tag">Circana Unify+ Essential</span>
-        </div>
+        <ul class="cert-list">
+          <li>Circana Unify+ Professional</li>
+          <li>Circana Unify+ Specialist</li>
+          <li>Circana Unify+ Essential</li>
+        </ul>
       </div>
 
-      <div class="skills-row reveal">
-        <p class="block-title">Skills &amp; Tools <span class="block-title-hint">— click one</span></p>
+      <div class="skills-row">
+        <p class="block-title">Skills &amp; tools <span class="block-title-hint">Select one to see where I used it</span></p>
         <div class="tag-row" id="skill-tags">
-          <button type="button" class="tag" data-skill="circana">Circana Certified Professional</button>
-          <button type="button" class="tag" data-skill="numerator">Numerator</button>
-          <button type="button" class="tag" data-skill="adobe">Adobe</button>
-          <button type="button" class="tag" data-skill="canva">Canva</button>
-          <button type="button" class="tag" data-skill="gsuite">G-Suite</button>
-          <button type="button" class="tag" data-skill="ms365">Microsoft 365</button>
-          <button type="button" class="tag" data-skill="meta">Meta Business Suite</button>
-          <button type="button" class="tag" data-skill="mailchimp">Mailchimp</button>
+          <button type="button" class="tag" data-skill="circana" aria-pressed="false">Circana Certified Professional</button>
+          <button type="button" class="tag" data-skill="numerator" aria-pressed="false">Numerator</button>
+          <button type="button" class="tag" data-skill="adobe" aria-pressed="false">Adobe</button>
+          <button type="button" class="tag" data-skill="canva" aria-pressed="false">Canva</button>
+          <button type="button" class="tag" data-skill="gsuite" aria-pressed="false">G-Suite</button>
+          <button type="button" class="tag" data-skill="ms365" aria-pressed="false">Microsoft 365</button>
+          <button type="button" class="tag" data-skill="meta" aria-pressed="false">Meta Business Suite</button>
+          <button type="button" class="tag" data-skill="mailchimp" aria-pressed="false">Mailchimp</button>
         </div>
       </div>
     </div>
@@ -1670,12 +1406,17 @@
 
   <footer>
     <div class="wrap">
-      <p class="cta-line">Let's build something <em>worth measuring</em>.</p>
+      <p class="cta-line">Hiring for a 2027 CPG internship or co-op? I'd like to hear about it.</p>
       <div class="btn-row">
         <a class="btn btn-solid dark" href="mailto:ryank29@xavier.edu">ryank29@xavier.edu</a>
-        <a class="btn btn-line dark" href="https://www.linkedin.com/in/kieferr" target="_blank" rel="noopener noreferrer">LinkedIn →</a>
+        <a class="btn btn-line dark" href="https://www.linkedin.com/in/kieferr" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn btn-line dark" href="assets/Kiefer-Ryan-Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
       </div>
-      <p class="foot-note">Kiefer Ryan · Cincinnati, OH · kjryan2004@gmail.com · 508-274-7338</p>
+      <p class="foot-note">
+        <span>Kiefer Ryan, Cincinnati, OH</span>
+        <a href="mailto:kjryan2004@gmail.com">kjryan2004@gmail.com</a>
+        <a href="tel:+15082747338">508-274-7338</a>
+      </p>
     </div>
   </footer>
 
@@ -1696,44 +1437,6 @@
       els.forEach(function (el) { el.classList.add('visible'); });
     }
 
-    // Count-up animation for the hero stat, triggered once it scrolls into view.
-    (function () {
-      var el = document.querySelector('[data-count-to]');
-      if (!el) return;
-      var target = parseFloat(el.dataset.countTo);
-      var prefix = el.dataset.prefix || '';
-      var suffix = el.dataset.suffix || '';
-      var decimals = (el.dataset.countTo.split('.')[1] || '').length;
-
-      function animate() {
-        var start = null;
-        var duration = 1200;
-        function step(ts) {
-          if (!start) start = ts;
-          var progress = Math.min((ts - start) / duration, 1);
-          var eased = 1 - Math.pow(1 - progress, 3);
-          var value = (target * eased).toFixed(decimals);
-          el.textContent = prefix + value + suffix;
-          if (progress < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-
-      if ('IntersectionObserver' in window) {
-        var statIo = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              animate();
-              statIo.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.5 });
-        statIo.observe(el);
-      } else {
-        el.textContent = prefix + target.toFixed(decimals) + suffix;
-      }
-    })();
-
     // Skill tag filter: click a skill to highlight where it was used in Experience.
     (function () {
       var tags = document.querySelectorAll('#skill-tags .tag');
@@ -1741,6 +1444,7 @@
       var hint = document.getElementById('filter-hint');
       var defaultHint = hint.textContent;
       var active = null;
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       function labelFor(tag) {
         return tag.textContent.trim();
@@ -1755,26 +1459,34 @@
         });
       }
 
+      function setActive(tag) {
+        tags.forEach(function (t) {
+          var on = t === tag;
+          t.classList.toggle('active', on);
+          t.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      }
+
       tags.forEach(function (tag) {
         tag.addEventListener('click', function () {
           var skill = tag.dataset.skill;
           if (active === skill) {
             active = null;
-            tags.forEach(function (t) { t.classList.remove('active'); });
+            setActive(null);
             apply(null);
             hint.textContent = defaultHint;
             hint.classList.remove('active');
             return;
           }
           active = skill;
-          tags.forEach(function (t) { t.classList.toggle('active', t === tag); });
+          setActive(tag);
           apply(skill);
           var matchCount = document.querySelectorAll('#timeline .t-entry.match').length;
           hint.textContent = matchCount
-            ? 'Showing where I used ' + labelFor(tag) + ' (' + matchCount + (matchCount === 1 ? ' role' : ' roles') + ') — click again to clear'
-            : labelFor(tag) + " hasn't shown up in a role yet — click again to clear";
+            ? labelFor(tag) + ': used in ' + matchCount + (matchCount === 1 ? ' role' : ' roles') + '. Select it again to clear.'
+            : labelFor(tag) + " hasn't shown up in a role yet. Select it again to clear.";
           hint.classList.add('active');
-          document.getElementById('experience').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('experience').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
         });
       });
     })();
@@ -1783,7 +1495,7 @@
     (function () {
       var projects = {
         aircare: {
-          title: "Air Care Category Review — Kroger × Reckitt",
+          title: "Air Care Category Review: Kroger × Reckitt",
           images: ["images/work/aircare-1.jpg", "images/work/aircare-2.jpg"],
           achievements: [
             "$1.65B Kroger air care category analyzed via Circana & Numerator",
@@ -1792,7 +1504,7 @@
           ]
         },
         rum: {
-          title: "Reimagining Myers's Rum — Sazerac Case Project",
+          title: "Reimagining Myers's Rum: Sazerac case project",
           images: ["images/work/rum-1.jpg", "images/work/rum-2.jpg"],
           achievements: [
             "Diagnosed decline across core (-3 to -11%), trial (-21 to -86%), and premium (-38 to -49%) SKUs",
@@ -1801,7 +1513,7 @@
           ]
         },
         rios: {
-          title: "Rios — The Best Rum RTD — Sazerac Case Project",
+          title: "Rios, The Best Rum RTD: Sazerac case project",
           images: ["images/work/rios-1.jpg", "images/work/rios-2.jpg"],
           achievements: [
             "Led primary consumer research to size the Gen Z RTD opportunity",
@@ -1810,7 +1522,7 @@
           ]
         },
         lo: {
-          title: "LO: The Better Choice — Beverage Brand Concept",
+          title: "LO: The Better Choice, beverage brand concept",
           images: ["images/work/lo-1.jpg", "images/work/lo-2.jpg"],
           achievements: [
             "Built the concept around a 53% YoY rise in Gen Z drinking less (NCSolutions)",
@@ -1825,6 +1537,7 @@
       var titleEl = document.getElementById('lightbox-title');
       var countEl = document.getElementById('lightbox-count');
       var achievementsEl = document.getElementById('lightbox-achievements');
+      var closeBtn = document.getElementById('lightbox-close');
       var current = null;
       var index = 0;
       var lastFocused = null;
@@ -1832,9 +1545,9 @@
       function render() {
         var p = projects[current];
         imgEl.src = p.images[index];
-        imgEl.alt = p.title + ' — image ' + (index + 1);
+        imgEl.alt = p.title + ', slide ' + (index + 1);
         titleEl.textContent = p.title;
-        countEl.textContent = (index + 1) + ' / ' + p.images.length;
+        countEl.textContent = 'Slide ' + (index + 1) + ' of ' + p.images.length;
         achievementsEl.innerHTML = '';
         p.achievements.forEach(function (a) {
           var li = document.createElement('li');
@@ -1844,13 +1557,14 @@
       }
 
       function open(project) {
+        if (!projects[project]) return;
         current = project;
         index = 0;
         lastFocused = document.activeElement;
         render();
         lightbox.classList.add('open');
         lightbox.setAttribute('aria-hidden', 'false');
-        document.getElementById('lightbox-close').focus();
+        closeBtn.focus();
         document.body.style.overflow = 'hidden';
       }
 
@@ -1885,7 +1599,7 @@
         });
       });
 
-      document.getElementById('lightbox-close').addEventListener('click', close);
+      closeBtn.addEventListener('click', close);
       document.getElementById('lightbox-prev').addEventListener('click', function () { step(-1); });
       document.getElementById('lightbox-next').addEventListener('click', function () { step(1); });
 
@@ -1898,6 +1612,14 @@
         if (e.key === 'Escape') close();
         if (e.key === 'ArrowLeft') step(-1);
         if (e.key === 'ArrowRight') step(1);
+        if (e.key === 'Tab') {
+          // Keep keyboard focus inside the open lightbox
+          var focusables = lightbox.querySelectorAll('button');
+          var first = focusables[0];
+          var last = focusables[focusables.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
       });
     })();
   </script>

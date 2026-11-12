@@ -62,17 +62,17 @@ its logo the way the existing four entries do it:
 - **Before wiring it in, render it small** (see `site-qa`'s `reference/site_qa.py` screenshot helper, or a quick standalone HTML page + headless-browser screenshot) at the actual badge size (~28px tall) on both a light and dark background. A logo that's a complex lockup (emblem + wordmark + subtext, like Sazerac's) will turn into an illegible blob at that size — crop it down to just the wordmark with PIL first, the way `sazerac-word.png` was made from `sazerac.png`. A logo that's white-only needs the `on-dark` chip variant; nearly everything else should sit on the default light `.logo-chip` background regardless of what section it's in.
 - No real company involved (an independent concept project) → skip the logo row and use a `work-org` label instead, like the LO entry does ("Independent Concept").
 
-**5. Add the HTML card.** Inside `<section class="section work-section" id="work">`,
+**5. Add the HTML card.** Inside the `<div class="work-list">` in
+`<section class="section work-section" id="work">`,
 add a new block following this exact shape (copy an existing one and edit):
 
 ```html
 <div class="work-feature reveal" data-project="SLUG" role="button" tabindex="0">
   <div class="work-feature-media">
     <img src="images/work/SLUG-1.jpg" alt="..." loading="lazy" />
-    <span class="work-feature-view">View case →</span>
+    <span class="work-feature-view">View slides</span>
   </div>
   <div class="work-feature-body">
-    <span class="work-feature-index mono">0N</span>
     <div class="work-feature-logos">
       <img class="logo-chip" src="images/logos/....svg" alt="..." />
     </div>
@@ -86,8 +86,11 @@ add a new block following this exact shape (copy an existing one and edit):
 </div>
 ```
 
-Renumber every `work-feature-index` in the section sequentially afterward —
-don't leave gaps or duplicates. The `:nth-child(even)` CSS rule automatically
+Cards are deliberately unnumbered (the projects aren't a sequence), so don't
+add 01/02/03 markers. Keep the `work-achievement` stat short: it renders as a
+yellow shelf tag, the site's one signature element, and it's reserved for real
+numbers. Also update the count in the Selected Work intro line ("Four CPG
+category and brand cases"). The `:nth-child(even)` CSS rule automatically
 flips the image to the right on alternating rows, so just append in order.
 
 **6. Add the matching JS entry.** In the `<script>` block, find the `projects`
