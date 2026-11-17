@@ -12,6 +12,8 @@
    One Sun button per screen; other actions are white outline buttons. Text on Coral is Plum. Fonts ship from ./fonts. */
 @font-face { font-family: "Nunito"; src: url("fonts/nunito.woff2") format("woff2"); font-weight: 200 1000; font-display: swap; }
 @font-face { font-family: "Nunito Sans"; src: url("fonts/nunito-sans.woff2") format("woff2"); font-weight: 200 1000; font-display: swap; }
+@font-face { font-family: "Syne"; src: url("fonts/syne.woff2") format("woff2"); font-weight: 400 800; font-display: swap; }
+@font-face { font-family: "Space Grotesk"; src: url("fonts/space-grotesk.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
 :root {
   --blue: #1658D6;        /* dominant: hero, pledge band, links */
   --blue-deep: #0E3F9E;   /* pressed states, footer */
@@ -72,6 +74,9 @@ header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; b
 
 /* hero: the product doing the job */
 .hero { background: var(--blue); color: #fff; position: relative; overflow: hidden; padding-block: 80px 140px; }
+/* The hero alone uses Syne for its headline and Space Grotesk for everything else in it; the rest of the page stays Nunito. */
+.hero { --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif; --body: "Space Grotesk", "Segoe UI", system-ui, sans-serif; font-family: var(--body); line-height: 1.7; }
+.hero h1 { font-family: "Syne", "Segoe UI", system-ui, sans-serif; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
 .hero .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; position: relative; z-index: 1; }
 .hero-copy { display: grid; gap: 30px; min-width: 0; }
 .hero .lede { font-size: 22px; line-height: 1.5; color: #E4EDFF; max-width: 30em; }
@@ -169,6 +174,17 @@ header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; b
 .figures sup a { text-decoration: none; font-size: 12px; }
 @media (max-width: 760px) { .why { padding-block: 72px; } .figures { grid-template-columns: 1fr; } .figures div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); } .figures div { padding-bottom: 20px; } }
 
+/* watch: the 45-second ad, framed as the phone so it keeps the phone's shadow */
+.watch { padding-block: 104px; }
+.watch .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 64px; align-items: center; }
+.watch .copy { display: grid; gap: 20px; align-content: start; }
+.watch .copy p { font-size: 19px; color: var(--muted); max-width: 30em; }
+.watch details summary { cursor: pointer; font: 800 17px/1.3 var(--display); color: var(--blue); }
+.watch details ol { margin: 14px 0 0; padding-left: 22px; display: grid; gap: 4px; color: var(--muted); font-size: 16px; }
+.reel { justify-self: center; width: min(360px, 100%); background: #0D1B33; border-radius: 46px; padding: 10px; box-shadow: 0 40px 70px -28px rgba(3, 15, 50, .75); }
+.reel video { display: block; width: 100%; aspect-ratio: 9 / 16; border-radius: 37px; background: #0D1B33; }
+@media (max-width: 900px) { .watch { padding-block: 72px; } .watch .wrap { grid-template-columns: 1fr; gap: 40px; } }
+
 /* promise */
 .pledge { background: var(--blue); color: #fff; padding-block: 104px; }
 .pledge .wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: 64px; }
@@ -249,6 +265,7 @@ footer ol { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 2px; }
     </a>
     <nav aria-label="Sections">
       <a href="#how">How it reads a flyer</a>
+      <a href="#watch">Watch the ad</a>
       <a href="#promise">Our promise</a>
       <a href="#questions">Questions</a>
     </nav>
@@ -261,7 +278,7 @@ footer ol { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 2px; }
     <div class="wrap">
       <div class="hero-copy">
         <h1>Right the first time.</h1>
-        <p class="lede">For student officers who post to EngageXU. PostCheck turns your event flyer into a finished post, asks about anything the flyer leaves out, and waits for your OK before anything goes up.</p>
+        <p class="lede">For student officers who post to EngageXU. PostCheck turns your event flyer into a finished post, asks about anything the flyer leaves out, and gives you every field checked and ready to paste into EngageXU.</p>
         <div class="cta-row">
           <a class="btn sun" href="#pilot">Join the pilot</a>
           <a class="textlink" href="#how">See it read a flyer</a>
@@ -287,7 +304,7 @@ footer ol { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 2px; }
               <div class="field"><div class="lab">Location <span class="src">from flyer</span></div><div class="val">Room 204</div><span class="tick"><svg viewBox="0 0 24 24"><path d="M5.5 12.5l4 4 9-9" fill="none" stroke="#1658D6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
               <div class="field"><div class="lab">Tags <span class="src">suggested</span></div><div class="val">Speaker, Free food</div><span class="tick"><svg viewBox="0 0 24 24"><path d="M5.5 12.5l4 4 9-9" fill="none" stroke="#1658D6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
             </div>
-            <div class="postbtn">Post to EngageXU</div>
+            <div class="postbtn">Ready for EngageXU</div>
           </div>
         </div>
         <div class="seal" aria-hidden="true">
@@ -328,11 +345,11 @@ footer ol { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 2px; }
         </div>
         <div class="row" role="row">
           <span class="scrap" role="cell">Room 204</span><span class="join" aria-hidden="true"></span>
-          <div class="post" role="cell"><span class="lab">Location</span><span class="val">Room 204</span><span class="how">Matched to EngageXU’s list of campus rooms</span><span class="ok"><svg><use href="#chk"/></svg></span></div>
+          <div class="post" role="cell"><span class="lab">Location</span><span class="val">Room 204</span><span class="how">Matched to a list of campus rooms</span><span class="ok"><svg><use href="#chk"/></svg></span></div>
         </div>
         <div class="row" role="row">
           <span class="scrap sunny" role="cell">Free pizza</span><span class="join" aria-hidden="true"></span>
-          <div class="post" role="cell"><span class="lab">Tags</span><span class="val">Speaker, Free food</span><span class="how">Suggested from EngageXU’s tag list</span><span class="ok"><svg><use href="#chk"/></svg></span></div>
+          <div class="post" role="cell"><span class="lab">Tags</span><span class="val">Speaker, Free food</span><span class="how">Suggested from common event tags</span><span class="ok"><svg><use href="#chk"/></svg></span></div>
         </div>
         <div class="row" role="row">
           <span class="scrap saved" role="cell">Saved once, used every time</span><span class="join" aria-hidden="true"></span>
@@ -340,7 +357,7 @@ footer ol { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 2px; }
         </div>
       </div>
       <div class="ledger-foot">
-        <p>You check each line against the flyer, fix anything that’s off, then post. Campus staff review it in EngageXU as usual.</p>
+        <p>You check each line against the flyer, fix anything that’s off, then paste it into EngageXU and submit it there. Campus staff review it as usual.</p>
         <a class="btn line" href="#pilot">Join the pilot</a>
       </div>
     </div>
@@ -354,6 +371,36 @@ footer ol { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 2px; }
         <div><strong>150+</strong><span>student organizations at Xavier<sup><a href="#src1">1</a></sup></span></div>
         <div><strong>2 weeks</strong><span>ahead is when every event must be submitted<sup><a href="#src2">2</a></sup></span></div>
         <div><strong>10–15 min</strong><span>to type one event in by hand, by our own estimate</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="watch" id="watch" aria-labelledby="watch-h">
+    <div class="wrap">
+      <div class="copy">
+        <h2 id="watch-h">See it in 45 seconds.</h2>
+        <p>Guest Speaker Night, from the group-chat mix-up to the right room. Every word is on screen, so it works with the sound off.</p>
+        <details>
+          <summary>Read what the video says</summary>
+          <ol>
+            <li>Sound familiar? “We’re in 240. Nobody’s here.”</li>
+            <li>How long did your last EngageXU post take?</li>
+            <li>Then it came back.</li>
+            <li>Every field. By hand. Every time.</li>
+            <li>Meet PostCheck. Flyer in. Post out.</li>
+            <li>Snap the flyer.</li>
+            <li>PostCheck fills it in.</li>
+            <li>It asks. It doesn’t guess.</li>
+            <li>Every detail, next to where it came from.</li>
+            <li>Check twice. Post once.</li>
+            <li>Room 204. The right one.</li>
+            <li>Next week? Start from this one.</li>
+            <li>PostCheck. Right the first time.</li>
+          </ol>
+        </details>
+      </div>
+      <div class="reel">
+        <video controls playsinline preload="metadata" src="postcheck-45s.mp4#t=1" aria-label="PostCheck ad, 45 seconds"></video>
       </div>
     </div>
   </section>
@@ -392,7 +439,7 @@ footer ol { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 2px; }
       <div>
         <details open>
           <summary>Do my events still need campus approval?</summary>
-          <p>Yes. PostCheck submits your event to EngageXU, and campus staff review it the same way they always have. It also keeps a copy so you can start from it next time.</p>
+          <p>Yes. You still submit the event in EngageXU, and campus staff review it the same way they always have. PostCheck can’t post to EngageXU directly yet, so it gives you each field ready to paste. It also keeps a copy so you can start from it next time.</p>
         </details>
         <details>
           <summary>What can I start from?</summary>
